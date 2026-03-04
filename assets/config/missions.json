@@ -1,114 +1,204 @@
 {
   "missions": [
     {
-      "id": "deliver_ore_1",
-      "name": "Ore Shipment",
-      "description": "Deliver a batch of ore to the colony.",
+      "id": "exchange_ore_shipment",
+      "name": "Ore Offload",
+      "description": "Offload surplus ore to the Colonial Exchange.",
       "icon": "local_shipping",
       "tier": 1,
-      "requirements": { "ore": 50 },
-      "rewards": { "credits": 100, "gems": 1 },
+      "requirements": {
+        "ore": 500
+      },
+      "rewards": {
+        "credits": 1200,
+        "research_data": 2
+      },
       "cooldownSeconds": 60,
       "unlockCondition": null
     },
     {
-      "id": "deliver_ice_1",
-      "name": "Ice Delivery",
-      "description": "Supply ice to the water processing plant.",
+      "id": "exchange_gas_canisters",
+      "name": "Gas Canister Export",
+      "description": "Export pressurized gas canisters to nearby outposts.",
+      "icon": "cloud",
+      "tier": 1,
+      "requirements": {
+        "gas": 400
+      },
+      "rewards": {
+        "credits": 1100,
+        "research_data": 2
+      },
+      "cooldownSeconds": 60,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "gas_harvester",
+        "level": 2
+      }
+    },
+    {
+      "id": "exchange_ice_volatiles",
+      "name": "Ice Volatiles Sale",
+      "description": "Sell ice volatiles for processing contracts.",
       "icon": "ac_unit",
       "tier": 1,
-      "requirements": { "ice": 40 },
-      "rewards": { "credits": 120, "gems": 1 },
+      "requirements": {
+        "ice": 400
+      },
+      "rewards": {
+        "credits": 1100,
+        "research_data": 2
+      },
       "cooldownSeconds": 60,
-      "unlockCondition": { "type": "building_level", "buildingId": "ice_harvester", "level": 3 }
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "ice_extractor",
+        "level": 2
+      }
     },
     {
-      "id": "energy_contract_1",
-      "name": "Power Supply Contract",
-      "description": "Provide energy to a nearby station.",
-      "icon": "bolt",
-      "tier": 1,
-      "requirements": { "energy": 100 },
-      "rewards": { "credits": 200, "gems": 1 },
-      "cooldownSeconds": 90,
-      "unlockCondition": { "type": "building_level", "buildingId": "solar_array", "level": 5 }
-    },
-    {
-      "id": "parts_order_1",
-      "name": "Parts Requisition",
-      "description": "Manufacture and deliver mechanical parts.",
-      "icon": "precision_manufacturing",
-      "tier": 1,
-      "requirements": { "parts": 30 },
-      "rewards": { "credits": 300, "gems": 2 },
+      "id": "exchange_metal_order",
+      "name": "Metal Purchase Order",
+      "description": "Fill an industrial metal purchase order.",
+      "icon": "factory",
+      "tier": 2,
+      "requirements": {
+        "metal": 600
+      },
+      "rewards": {
+        "credits": 3500,
+        "research_data": 6
+      },
       "cooldownSeconds": 120,
-      "unlockCondition": { "type": "building_level", "buildingId": "assembler_bay", "level": 3 }
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "refinery",
+        "level": 3
+      }
     },
     {
-      "id": "alloy_shipment",
-      "name": "Alloy Shipment",
-      "description": "Deliver refined alloys for construction.",
-      "icon": "view_in_ar",
-      "tier": 2,
-      "requirements": { "alloys": 20 },
-      "rewards": { "credits": 500, "gems": 3 },
-      "cooldownSeconds": 180,
-      "unlockCondition": { "type": "building_level", "buildingId": "moon_refinery", "level": 3 }
-    },
-    {
-      "id": "electronics_order",
-      "name": "Electronics Fulfillment",
-      "description": "Supply electronics for a space station upgrade.",
-      "icon": "memory",
-      "tier": 2,
-      "requirements": { "electronics": 15 },
-      "rewards": { "credits": 800, "gems": 3 },
-      "cooldownSeconds": 180,
-      "unlockCondition": { "type": "building_level", "buildingId": "electronics_fab", "level": 3 }
-    },
-    {
-      "id": "fuel_run",
-      "name": "Fuel Run",
-      "description": "Deliver fuel to a fleet of cargo ships.",
+      "id": "exchange_fuel_convoy",
+      "name": "Fuel Convoy Resupply",
+      "description": "Resupply a convoy with refined fuel.",
       "icon": "local_gas_station",
       "tier": 2,
-      "requirements": { "fuel": 25 },
-      "rewards": { "credits": 600, "gems": 2 },
-      "cooldownSeconds": 150,
-      "unlockCondition": { "type": "building_level", "buildingId": "fuel_distillery", "level": 3 }
+      "requirements": {
+        "fuel": 500
+      },
+      "rewards": {
+        "credits": 3200,
+        "research_data": 6
+      },
+      "cooldownSeconds": 120,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "fuel_plant",
+        "level": 3
+      }
     },
     {
-      "id": "research_grant",
-      "name": "Research Grant",
-      "description": "Submit research data for a galactic grant.",
-      "icon": "science",
+      "id": "exchange_polymer_batch",
+      "name": "Polymer Batch Sale",
+      "description": "Sell polymers to fabrication partners.",
+      "icon": "bubble_chart",
       "tier": 2,
-      "requirements": { "research_data": 10 },
-      "rewards": { "credits": 1000, "gems": 5 },
-      "cooldownSeconds": 300,
-      "unlockCondition": { "type": "building_level", "buildingId": "research_lab", "level": 3 }
+      "requirements": {
+        "polymer": 500
+      },
+      "rewards": {
+        "credits": 3200,
+        "research_data": 6
+      },
+      "cooldownSeconds": 120,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "polymer_lab",
+        "level": 3
+      }
     },
     {
-      "id": "bulk_materials",
-      "name": "Bulk Materials Contract",
-      "description": "A large order of mixed materials.",
-      "icon": "inventory_2",
-      "tier": 2,
-      "requirements": { "ore": 200, "ice": 100, "energy": 300 },
-      "rewards": { "credits": 1500, "gems": 5 },
-      "cooldownSeconds": 240,
-      "unlockCondition": { "type": "building_level", "buildingId": "asteroid_mine", "level": 20 }
-    },
-    {
-      "id": "advanced_components",
-      "name": "Advanced Components",
-      "description": "Deliver a complex mix of manufactured goods.",
-      "icon": "precision_manufacturing",
+      "id": "exchange_alloys_build",
+      "name": "Alloys for Infrastructure",
+      "description": "Deliver alloys to build higher-end infrastructure.",
+      "icon": "view_in_ar",
       "tier": 3,
-      "requirements": { "alloys": 50, "electronics": 30, "polymer": 20 },
-      "rewards": { "credits": 5000, "gems": 10 },
-      "cooldownSeconds": 600,
-      "unlockCondition": { "type": "building_level", "buildingId": "electronics_fab", "level": 10 }
+      "requirements": {
+        "alloys": 350
+      },
+      "rewards": {
+        "credits": 9000,
+        "research_data": 15,
+        "capacity": 10
+      },
+      "cooldownSeconds": 240,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "alloy_foundry",
+        "level": 4
+      }
+    },
+    {
+      "id": "exchange_electronics_station",
+      "name": "Electronics Station Upgrade",
+      "description": "Provide electronics for station control systems.",
+      "icon": "memory",
+      "tier": 3,
+      "requirements": {
+        "electronics": 250
+      },
+      "rewards": {
+        "credits": 9500,
+        "research_data": 15,
+        "logistics": 10
+      },
+      "cooldownSeconds": 240,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "circuit_plant",
+        "level": 4
+      }
+    },
+    {
+      "id": "exchange_parts_kit",
+      "name": "Industrial Parts Kit",
+      "description": "Deliver industrial parts for expansion modules.",
+      "icon": "precision_manufacturing",
+      "tier": 4,
+      "requirements": {
+        "parts": 800,
+        "fuel": 300
+      },
+      "rewards": {
+        "credits": 20000,
+        "research_data": 40,
+        "ships": 1
+      },
+      "cooldownSeconds": 420,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "assembly_plant",
+        "level": 5
+      }
+    },
+    {
+      "id": "exchange_ship_contract",
+      "name": "Fleet Procurement Contract",
+      "description": "Deliver ships to a faction fleet procurement program.",
+      "icon": "rocket_launch",
+      "tier": 4,
+      "requirements": {
+        "ships": 2
+      },
+      "rewards": {
+        "credits": 50000,
+        "research_data": 80
+      },
+      "cooldownSeconds": 900,
+      "unlockCondition": {
+        "type": "building_level",
+        "buildingId": "shipyard",
+        "level": 2
+      }
     }
   ]
 }

@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+import '../models/config/building_config.dart';
+import '../models/config/contract_config.dart';
 import '../models/config/game_config.dart';
 import '../models/config/technology_config.dart';
 import '../models/production_summary.dart';
@@ -16,32 +18,24 @@ class GameEngine extends ChangeNotifier {
   final GameConfig config;
   GameState state;
 
-  // Debug / simulation controls
-  double _gameSpeed = 1.0;
-
   ProductionSummary productionSummary = const ProductionSummary.empty();
+
+  // Debug / simulation controls
+  double gameSpeed = 1.0;
+  final DateTime startedAt = DateTime.now();
+
+  Duration get runtime => DateTime.now().difference(startedAt);
 
   // Derived tech effects
   final Map<String, double> _buildingProductionMult = {}; // buildingId -> mult
   final Map<String, double> _buildingCostMult = {}; // buildingId -> mult
   double _globalProductionMult = 1.0;
   double _globalConsumptionMult = 1.0;
+  double _storageMultiplier = 1.0;
 
   GameEngine({required this.config, required this.state}) {
     _recomputeTechEffects();
     _recomputeProductionSummary();
-  }
-
-  /// Total in-session runtime (driven by [GameState.totalPlaytimeSeconds]).
-  Duration get runtime => Duration(seconds: state.totalPlaytimeSeconds);
-
-  /// Multiplier applied to simulation ticks.
-  double get gameSpeed => _gameSpeed;
-  set gameSpeed(double v) {
-    final next = v.isFinite && v > 0 ? v : 1.0;
-    if ((next - _gameSpeed).abs() < 1e-9) return;
-    _gameSpeed = next;
-    notifyListeners();
   }
 
   // -----------------------------
@@ -49,7 +43,8 @@ class GameEngine extends ChangeNotifier {
   // -----------------------------
 
   void tick(double dtSeconds) {
-    final scaledDt = dtSeconds * _gameSpeed;
+    final scaledDt = dtSeconds * gameSpeed;
+
     // Update playtime
     state.totalPlaytimeSeconds += scaledDt.round();
 
@@ -207,6 +202,11 @@ class GameEngine extends ChangeNotifier {
         if (e.value == null) return;
         _globalConsumptionMult *= e.value!;
         return;
+      case 'storage_multiplier':
+        if (e.value == null) return;
+        // Treat as "set at least" so higher tiers override lower tiers cleanly.
+        _storageMultiplier = max(_storageMultiplier, e.value!);
+        return;
       default:
         // Unknown effects ignored for now.
         return;
@@ -272,7 +272,7 @@ class GameEngine extends ChangeNotifier {
 
     // Capacities: currently driven by resource config baseCapacity.
     final capacities = <String, double>{
-      for (final r in config.resourceList) r.id: r.baseCapacity,
+      for (final r in config.resourceList) r.id: r.baseCapacity * _storageMultiplier,
     };
 
     final delta = <String, double>{};
@@ -351,7 +351,7 @@ class GameEngine extends ChangeNotifier {
     final grossProd = <String, double>{};
     final grossCons = <String, double>{};
     final caps = <String, double>{
-      for (final r in config.resourceList) r.id: r.baseCapacity,
+      for (final r in config.resourceList) r.id: r.baseCapacity * _storageMultiplier,
     };
 
     for (final b in config.buildingList) {
