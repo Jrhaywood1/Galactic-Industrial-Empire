@@ -41,6 +41,16 @@
       "capacityGrowth": 1.5
     },
     {
+      "id": "gas",
+      "name": "Gas",
+      "tier": 1,
+      "icon": "cloud",
+      "color": "#87CEFA",
+      "description": "Volatile gases captured from gas giants.",
+      "baseCapacity": 500,
+      "capacityGrowth": 1.5
+    },
+    {
       "id": "silicates",
       "name": "Silicates",
       "tier": 1,
@@ -69,6 +79,16 @@
       "description": "Mechanical components assembled from raw materials.",
       "baseCapacity": 300,
       "capacityGrowth": 1.5
+    },
+    {
+      "id": "metal",
+      "name": "Metal",
+      "tier": 2,
+      "icon": "factory",
+      "color": "#A9A9A9",
+      "description": "Refined metal used for advanced manufacturing.",
+      "baseCapacity": 250,
+      "capacityGrowth": 1.4
     },
     {
       "id": "alloys",
@@ -109,6 +129,16 @@
       "description": "Refined propellant for reactors and ships.",
       "baseCapacity": 300,
       "capacityGrowth": 1.4
+    },
+    {
+      "id": "ships",
+      "name": "Ships",
+      "tier": 3,
+      "icon": "rocket_launch",
+      "color": "#E6E6FA",
+      "description": "Expansion units used to unlock new systems and prestige later.",
+      "baseCapacity": 100,
+      "capacityGrowth": 1.3
     },
     {
       "id": "research_data",

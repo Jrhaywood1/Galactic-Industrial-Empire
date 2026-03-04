@@ -58,6 +58,7 @@ class _TierHeader extends StatelessWidget {
     1: 'Foundational Research',
     2: 'Applied Sciences',
     3: 'Advanced Theory',
+    4: 'Interstellar Engineering',
   };
 
   @override

@@ -1,339 +1,157 @@
 {
   "buildings": [
     {
-      "id": "asteroid_mine",
-      "name": "Asteroid Mine",
-      "description": "Extracts raw ore from nearby asteroids.",
+      "id": "mining_rig",
+      "name": "Mining Rig",
+      "description": "Extracts ore from asteroid fields.",
       "category": "extraction",
       "tier": 1,
-      "icon": "hardware",
+      "icon": "landscape",
       "unlockCondition": null,
-      "baseCost": { "credits": 10 },
-      "costScaling": 1.15,
-      "produces": { "ore": 1.0, "credits": 0.5 },
-      "consumes": {},
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 1000
-    },
-
-    {
-      "id": "solar_array",
-      "name": "Solar Array",
-      "description": "Converts starlight into usable energy.",
-      "category": "power",
-      "tier": 1,
-      "icon": "wb_sunny",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "asteroid_mine",
-        "level": 3
-      },
       "baseCost": { "credits": 15 },
-      "costScaling": 1.12,
-      "produces": { "energy": 2.0 },
+      "costScaling": 1.15,
+      "produces": { "ore": 2.0 },
       "consumes": {},
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 1000
+      "productionMultiplierPerLevel": 1.06,
+      "maxLevel": 999
     },
-
     {
-      "id": "trade_beacon",
-      "name": "Trade Beacon",
-      "description": "Broadcasts mineral yields to nearby traders, generating steady credits.",
-      "category": "economy",
-      "tier": 1,
-      "icon": "satellite_alt",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "asteroid_mine",
-        "level": 2
-      },
-      "baseCost": { "credits": 20, "ore": 10 },
-      "costScaling": 1.14,
-      "produces": { "credits": 1.5 },
-      "consumes": { "ore": 0.1 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 1000
-    },
-
-    {
-      "id": "ice_harvester",
-      "name": "Ice Harvester",
-      "description": "Collects frozen volatiles from comets.",
+      "id": "ice_extractor",
+      "name": "Ice Extractor",
+      "description": "Harvests frozen ice deposits from icy bodies.",
       "category": "extraction",
       "tier": 1,
       "icon": "ac_unit",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "asteroid_mine",
-        "level": 5
-      },
-      "baseCost": { "credits": 25 },
-      "costScaling": 1.15,
-      "produces": { "ice": 0.8 },
+      "unlockCondition": { "type": "building_level", "buildingId": "mining_rig", "level": 3 },
+      "baseCost": { "credits": 40 },
+      "costScaling": 1.16,
+      "produces": { "ice": 2.0 },
       "consumes": {},
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 1000
+      "productionMultiplierPerLevel": 1.06,
+      "maxLevel": 999
     },
-
     {
-      "id": "silicate_collector",
-      "name": "Silicate Collector",
-      "description": "Gathers silicate minerals from asteroid belts.",
+      "id": "gas_harvester",
+      "name": "Gas Harvester",
+      "description": "Captures volatile gases from gas giants.",
       "category": "extraction",
       "tier": 1,
-      "icon": "grain",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "asteroid_mine",
-        "level": 10
-      },
-      "baseCost": { "credits": 50 },
-      "costScaling": 1.15,
-      "produces": { "silicates": 0.6 },
+      "icon": "cloud",
+      "unlockCondition": { "type": "building_level", "buildingId": "ice_extractor", "level": 3 },
+      "baseCost": { "credits": 100 },
+      "costScaling": 1.17,
+      "produces": { "gas": 1.5 },
       "consumes": {},
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 1000
+      "productionMultiplierPerLevel": 1.06,
+      "maxLevel": 999
     },
 
     {
-      "id": "assembler_bay",
-      "name": "Assembler Bay",
-      "description": "Constructs mechanical parts from raw materials.",
-      "category": "production",
-      "tier": 1,
-      "icon": "precision_manufacturing",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "asteroid_mine",
-        "level": 8
-      },
-      "baseCost": { "credits": 100, "ore": 20 },
+      "id": "refinery",
+      "name": "Refinery",
+      "description": "Processes ore into metal.",
+      "category": "refining",
+      "tier": 2,
+      "icon": "factory",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "ore", "amount": 100 },
+      "baseCost": { "credits": 250 },
       "costScaling": 1.18,
-      "produces": { "parts": 0.5 },
-      "consumes": { "ore": 1.0, "energy": 2.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 500
+      "produces": { "metal": 1.0 },
+      "consumes": { "ore": 5.0 },
+      "productionMultiplierPerLevel": 1.05,
+      "maxLevel": 999
     },
-
     {
-      "id": "field_lab",
-      "name": "Field Lab",
-      "description": "Conducts quick experiments on-site to generate early research data.",
-      "category": "science",
-      "tier": 1,
-      "icon": "science",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "solar_array",
-        "level": 2
-      },
-      "baseCost": { "credits": 80, "energy": 20 },
-      "costScaling": 1.16,
-      "produces": { "research_data": 0.2 },
-      "consumes": { "energy": 0.5 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 500
-    },
-
-    {
-      "id": "credit_mint",
-      "name": "Credit Mint",
-      "description": "Generates credits from processed materials.",
-      "category": "economy",
-      "tier": 1,
-      "icon": "account_balance",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "assembler_bay",
-        "level": 3
-      },
-      "baseCost": { "credits": 200, "parts": 10 },
-      "costScaling": 1.2,
-      "produces": { "credits": 5.0 },
-      "consumes": { "parts": 0.2 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 500
-    },
-
-    {
-      "id": "moon_refinery",
-      "name": "Moon Refinery",
-      "description": "Refines ore into usable alloys.",
+      "id": "fuel_plant",
+      "name": "Fuel Plant",
+      "description": "Condenses gas into fuel.",
       "category": "refining",
-      "tier": 2,
-      "icon": "view_in_ar",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "assembler_bay",
-        "level": 5
-      },
-      "baseCost": { "credits": 500, "ore": 200 },
-      "costScaling": 1.2,
-      "produces": { "alloys": 0.6 },
-      "consumes": { "ore": 2.0, "energy": 1.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 500
-    },
-
-    {
-      "id": "polymer_plant",
-      "name": "Polymer Plant",
-      "description": "Synthesizes polymer from ice and energy.",
-      "category": "refining",
-      "tier": 2,
-      "icon": "science",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "moon_refinery",
-        "level": 3
-      },
-      "baseCost": { "credits": 800, "ice": 150, "energy": 200 },
-      "costScaling": 1.22,
-      "produces": { "polymer": 0.5 },
-      "consumes": { "ice": 1.5, "energy": 2.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 400
-    },
-
-    {
-      "id": "electronics_fab",
-      "name": "Electronics Fab",
-      "description": "Manufactures electronics from silicates and alloys.",
-      "category": "production",
-      "tier": 2,
-      "icon": "memory",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "moon_refinery",
-        "level": 5
-      },
-      "baseCost": { "credits": 1200, "silicates": 200, "alloys": 120 },
-      "costScaling": 1.24,
-      "produces": { "electronics": 0.35 },
-      "consumes": { "silicates": 1.0, "alloys": 0.5, "energy": 3.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 300
-    },
-
-    {
-      "id": "fuel_distillery",
-      "name": "Fuel Distillery",
-      "description": "Converts ice into fuel.",
-      "category": "power",
       "tier": 2,
       "icon": "local_gas_station",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "polymer_plant",
-        "level": 3
-      },
-      "baseCost": { "credits": 1400, "ice": 250, "energy": 300 },
-      "costScaling": 1.23,
-      "produces": { "fuel": 0.4 },
-      "consumes": { "ice": 2.0, "energy": 2.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 300
+      "unlockCondition": { "type": "resource_amount", "resourceId": "gas", "amount": 50 },
+      "baseCost": { "credits": 400 },
+      "costScaling": 1.18,
+      "produces": { "fuel": 1.0 },
+      "consumes": { "gas": 3.0 },
+      "productionMultiplierPerLevel": 1.05,
+      "maxLevel": 999
     },
-
     {
-      "id": "research_lab",
-      "name": "Research Lab",
-      "description": "Generates research data for unlocking technologies.",
-      "category": "science",
+      "id": "polymer_lab",
+      "name": "Polymer Lab",
+      "description": "Processes ice into polymers.",
+      "category": "refining",
       "tier": 2,
-      "icon": "biotech",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "electronics_fab",
-        "level": 3
-      },
-      "baseCost": { "credits": 2000, "electronics": 15, "alloys": 20 },
+      "icon": "bubble_chart",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "ice", "amount": 80 },
+      "baseCost": { "credits": 350 },
+      "costScaling": 1.18,
+      "produces": { "polymer": 1.0 },
+      "consumes": { "ice": 4.0 },
+      "productionMultiplierPerLevel": 1.05,
+      "maxLevel": 999
+    },
+
+    {
+      "id": "alloy_foundry",
+      "name": "Alloy Foundry",
+      "description": "Forges metal into high-strength alloys.",
+      "category": "manufacturing",
+      "tier": 3,
+      "icon": "view_in_ar",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "metal", "amount": 50 },
+      "baseCost": { "credits": 1200 },
+      "costScaling": 1.2,
+      "produces": { "alloys": 1.0 },
+      "consumes": { "metal": 2.0 },
+      "productionMultiplierPerLevel": 1.04,
+      "maxLevel": 999
+    },
+    {
+      "id": "circuit_plant",
+      "name": "Circuit Plant",
+      "description": "Fabricates electronics from polymers.",
+      "category": "manufacturing",
+      "tier": 3,
+      "icon": "memory",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "polymer", "amount": 50 },
+      "baseCost": { "credits": 1100 },
+      "costScaling": 1.2,
+      "produces": { "electronics": 1.0 },
+      "consumes": { "polymer": 2.0 },
+      "productionMultiplierPerLevel": 1.04,
+      "maxLevel": 999
+    },
+    {
+      "id": "assembly_plant",
+      "name": "Assembly Plant",
+      "description": "Combines components into industrial parts.",
+      "category": "manufacturing",
+      "tier": 3,
+      "icon": "precision_manufacturing",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "alloys", "amount": 25 },
+      "baseCost": { "credits": 2500 },
+      "costScaling": 1.22,
+      "produces": { "parts": 0.5 },
+      "consumes": { "alloys": 1.0, "electronics": 1.0 },
+      "productionMultiplierPerLevel": 1.04,
+      "maxLevel": 999
+    },
+
+    {
+      "id": "shipyard",
+      "name": "Shipyard",
+      "description": "Constructs ships for galactic expansion.",
+      "category": "expansion",
+      "tier": 4,
+      "icon": "rocket_launch",
+      "unlockCondition": { "type": "resource_amount", "resourceId": "parts", "amount": 25 },
+      "baseCost": { "credits": 8000 },
       "costScaling": 1.25,
-      "produces": { "research_data": 0.1 },
-      "consumes": { "electronics": 0.3, "energy": 5.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 300
-    },
-
-    {
-      "id": "fusion_reactor",
-      "name": "Fusion Reactor",
-      "description": "Produces massive energy using refined fuel.",
-      "category": "power",
-      "tier": 3,
-      "icon": "flash_on",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "fuel_distillery",
-        "level": 5
-      },
-      "baseCost": { "credits": 10000, "fuel": 100, "alloys": 200 },
-      "costScaling": 1.3,
-      "produces": { "energy": 30.0 },
-      "consumes": { "fuel": 1.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 200
-    },
-
-    {
-      "id": "dyson_swarm",
-      "name": "Dyson Swarm",
-      "description": "A network of satellites that harvest stellar energy at scale.",
-      "category": "megastructure",
-      "tier": 3,
-      "icon": "flare",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "fusion_reactor",
-        "level": 10
-      },
-      "baseCost": { "credits": 50000, "alloys": 1000, "electronics": 500 },
-      "costScaling": 1.35,
-      "produces": { "energy": 200.0 },
-      "consumes": {},
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 100
-    },
-
-    {
-      "id": "antimatter_condenser",
-      "name": "Antimatter Condenser",
-      "description": "Condenses energy into antimatter for advanced systems.",
-      "category": "exotic",
-      "tier": 3,
-      "icon": "blur_on",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "dyson_swarm",
-        "level": 3
-      },
-      "baseCost": { "credits": 120000, "energy": 50000, "electronics": 1500 },
-      "costScaling": 1.4,
-      "produces": { "antimatter": 0.08 },
-      "consumes": { "energy": 50.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 100
-    },
-
-    {
-      "id": "galaxy_forge",
-      "name": "Galaxy Forge",
-      "description": "A colossal forge that produces dark matter through extreme processes.",
-      "category": "prestige",
-      "tier": 3,
-      "icon": "public",
-      "unlockCondition": {
-        "type": "building_level",
-        "buildingId": "antimatter_condenser",
-        "level": 5
-      },
-      "baseCost": { "credits": 500000, "antimatter": 10, "alloys": 5000 },
-      "costScaling": 1.45,
-      "produces": { "dark_matter": 0.02 },
-      "consumes": { "energy": 150.0 },
-      "productionMultiplierPerLevel": 1.0,
-      "maxLevel": 50
+      "produces": { "ships": 0.02 },
+      "consumes": { "parts": 0.2, "fuel": 0.5 },
+      "productionMultiplierPerLevel": 1.03,
+      "maxLevel": 999
     }
   ]
 }

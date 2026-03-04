@@ -1,0 +1,88 @@
+{
+  "contracts": [
+    {
+      "id": "contract_ore_delivery",
+      "title": "Ore Delivery",
+      "description": "Deliver ore to the orbital depot.",
+      "type": "delivery",
+      "repeatable": true,
+      "requirements": [
+        { "resource": "ore", "amount": 100 }
+      ],
+      "rewards": {
+        "credits": 150,
+        "research_data": 2
+      }
+    },
+    {
+      "id": "contract_ice_delivery",
+      "title": "Ice Shipment",
+      "description": "Supply ice for volatile processing.",
+      "type": "delivery",
+      "repeatable": true,
+      "requirements": [
+        { "resource": "ice", "amount": 80 }
+      ],
+      "rewards": {
+        "credits": 140,
+        "research_data": 2
+      }
+    },
+    {
+      "id": "contract_metal_supply",
+      "title": "Metal Supply Contract",
+      "description": "Deliver refined metal to the shipyards.",
+      "type": "delivery",
+      "repeatable": true,
+      "requirements": [
+        { "resource": "metal", "amount": 50 }
+      ],
+      "rewards": {
+        "credits": 400,
+        "research_data": 5
+      }
+    },
+    {
+      "id": "contract_parts_order",
+      "title": "Industrial Parts Order",
+      "description": "Produce and deliver industrial parts.",
+      "type": "manufacturing",
+      "repeatable": true,
+      "requirements": [
+        { "resource": "parts", "amount": 20 }
+      ],
+      "rewards": {
+        "credits": 1200,
+        "research_data": 10
+      }
+    },
+    {
+      "id": "contract_fuel_logistics",
+      "title": "Fuel Logistics",
+      "description": "Ship fuel to the outer colonies.",
+      "type": "logistics",
+      "repeatable": true,
+      "requirements": [
+        { "resource": "fuel", "amount": 100 }
+      ],
+      "rewards": {
+        "credits": 900,
+        "research_data": 8
+      }
+    },
+    {
+      "id": "contract_ship_construction",
+      "title": "Ship Construction",
+      "description": "Deliver finished ships for expansion.",
+      "type": "manufacturing",
+      "repeatable": false,
+      "requirements": [
+        { "resource": "ships", "amount": 5 }
+      ],
+      "rewards": {
+        "credits": 5000,
+        "gems": 5
+      }
+    }
+  ]
+}

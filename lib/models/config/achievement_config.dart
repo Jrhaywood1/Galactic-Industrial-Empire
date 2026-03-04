@@ -1,4 +1,3 @@
-import 'building_config.dart';
 
 class AchievementCondition {
   final String type;

@@ -65,6 +65,8 @@ IconData iconFromString(String name) {
     'brightness_high': Icons.brightness_high,
     'engineering': Icons.engineering,
     'smart_toy': Icons.smart_toy,
+    'cloud': Icons.cloud,
+    'rocket_launch': Icons.rocket_launch,
   };
   return iconMap[name] ?? Icons.help_outline;
 }

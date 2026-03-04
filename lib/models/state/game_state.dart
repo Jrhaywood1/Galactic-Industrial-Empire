@@ -4,6 +4,7 @@ class GameState {
   Map<String, double> resources;
   Map<String, int> buildingLevels;
   Set<String> unlockedTechs;
+  Set<String> completedContracts;
   int lastTickTimestamp;
   int totalPlaytimeSeconds;
 
@@ -11,6 +12,7 @@ class GameState {
     required this.resources,
     required this.buildingLevels,
     required this.unlockedTechs,
+    required this.completedContracts,
     required this.lastTickTimestamp,
     this.totalPlaytimeSeconds = 0,
   });
@@ -25,6 +27,7 @@ class GameState {
       resources: resources,
       buildingLevels: {for (final b in config.buildingList) b.id: 0},
       unlockedTechs: {},
+      completedContracts: {},
       lastTickTimestamp: DateTime.now().millisecondsSinceEpoch,
     );
   }
@@ -33,6 +36,7 @@ class GameState {
         'resources': resources,
         'buildingLevels': buildingLevels,
         'unlockedTechs': unlockedTechs.toList(),
+        'completedContracts': completedContracts.toList(),
         'lastTickTimestamp': lastTickTimestamp,
         'totalPlaytimeSeconds': totalPlaytimeSeconds,
       };
@@ -44,6 +48,7 @@ class GameState {
       buildingLevels: (json['buildingLevels'] as Map<String, dynamic>)
           .map((k, v) => MapEntry(k, (v as num).toInt())),
       unlockedTechs: Set<String>.from(json['unlockedTechs'] as List),
+      completedContracts: Set<String>.from((json['completedContracts'] as List?) ?? const []),
       lastTickTimestamp: json['lastTickTimestamp'] as int,
       totalPlaytimeSeconds: (json['totalPlaytimeSeconds'] as int?) ?? 0,
     );

@@ -6,6 +6,7 @@ import '../models/config/building_config.dart';
 import '../models/config/technology_config.dart';
 import '../models/config/achievement_config.dart';
 import '../models/config/mission_config.dart';
+import '../models/config/contract_config.dart';
 import '../models/config/game_config.dart';
 
 class ConfigLoader {
@@ -16,6 +17,7 @@ class ConfigLoader {
       rootBundle.loadString('assets/config/tech_tree.json'),
       rootBundle.loadString('assets/config/achievements.json'),
       rootBundle.loadString('assets/config/missions.json'),
+      rootBundle.loadString('assets/config/contracts.json'),
     ]);
 
     final resourcesJson = jsonDecode(results[0]) as Map<String, dynamic>;
@@ -23,6 +25,7 @@ class ConfigLoader {
     final techJson = jsonDecode(results[2]) as Map<String, dynamic>;
     final achievementsJson = jsonDecode(results[3]) as Map<String, dynamic>;
     final missionsJson = jsonDecode(results[4]) as Map<String, dynamic>;
+    final contractsJson = jsonDecode(results[5]) as Map<String, dynamic>;
 
     final resourceList = (resourcesJson['resources'] as List)
         .map((e) => ResourceConfig.fromJson(e as Map<String, dynamic>))
@@ -44,18 +47,24 @@ class ConfigLoader {
         .map((e) => MissionConfig.fromJson(e as Map<String, dynamic>))
         .toList();
 
+    final contractList = (contractsJson['contracts'] as List)
+        .map((e) => ContractConfig.fromJson(e as Map<String, dynamic>))
+        .toList();
+
     return GameConfig(
       resources: {for (final r in resourceList) r.id: r},
       buildings: {for (final b in buildingList) b.id: b},
       technologies: {for (final t in technologyList) t.id: t},
       achievements: {for (final a in achievementList) a.id: a},
       missions: {for (final m in missionList) m.id: m},
+      contracts: {for (final c in contractList) c.id: c},
 
       resourceList: resourceList,
       buildingList: buildingList,
       technologyList: technologyList,
       achievementList: achievementList,
       missionList: missionList,
+      contractList: contractList,
     );
   }
 }

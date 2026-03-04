@@ -1,116 +1,290 @@
-{
-  "technologies": [
-    {
-      "id": "basic_mining",
-      "name": "Basic Mining",
-      "description": "Improves ore extraction efficiency.",
-      "icon": "hardware",
-      "tier": 1,
-      "cost": { "research_data": 5 },
-      "prerequisites": [],
-      "effects": [
-        { "type": "production_multiplier", "target": "asteroid_mine", "value": 1.5 }
-      ]
+[
+  {
+    "id": "tech_mining_efficiency_1",
+    "name": "Mining Efficiency I",
+    "description": "Mining rigs produce 20% more ore.",
+    "tier": 1,
+    "cost": {
+      "metal": 100
     },
-    {
-      "id": "advanced_extraction",
-      "name": "Advanced Extraction",
-      "description": "Further improves mining and harvesting output.",
-      "icon": "engineering",
-      "tier": 1,
-      "cost": { "research_data": 15 },
-      "prerequisites": ["basic_mining"],
-      "effects": [
-        { "type": "production_multiplier", "target": "asteroid_mine", "value": 2.0 },
-        { "type": "production_multiplier", "target": "ice_harvester", "value": 1.5 }
-      ]
-    },
-    {
-      "id": "solar_efficiency",
-      "name": "Solar Efficiency",
-      "description": "Increases energy output from solar arrays.",
-      "icon": "wb_sunny",
-      "tier": 1,
-      "cost": { "research_data": 10 },
-      "prerequisites": [],
-      "effects": [
-        { "type": "production_multiplier", "target": "solar_array", "value": 2.0 }
-      ]
-    },
-    {
-      "id": "alloy_science",
-      "name": "Alloy Science",
-      "description": "Improves alloy refining processes.",
-      "icon": "view_in_ar",
-      "tier": 2,
-      "cost": { "research_data": 30 },
-      "prerequisites": ["advanced_extraction"],
-      "effects": [
-        { "type": "production_multiplier", "target": "moon_refinery", "value": 1.5 },
-        { "type": "cost_reduction", "target": "moon_refinery", "value": 0.9 }
-      ]
-    },
-    {
-      "id": "automation_basics",
-      "name": "Automation Basics",
-      "description": "Reduces resource consumption across all buildings.",
-      "icon": "smart_toy",
-      "tier": 2,
-      "cost": { "research_data": 40, "electronics": 20 },
-      "prerequisites": ["alloy_science"],
-      "effects": [
-        { "type": "global_consumption_reduction", "value": 0.9 }
-      ]
-    },
-    {
-      "id": "fusion_theory",
-      "name": "Fusion Theory",
-      "description": "Unlocks fusion reactor improvements.",
-      "icon": "blur_circular",
-      "tier": 2,
-      "cost": { "research_data": 50 },
-      "prerequisites": ["solar_efficiency"],
-      "effects": [
-        { "type": "production_multiplier", "target": "fusion_reactor", "value": 2.0 }
-      ]
-    },
-    {
-      "id": "quantum_computing",
-      "name": "Quantum Computing",
-      "description": "Enables quantum core production.",
-      "icon": "blur_on",
-      "tier": 3,
-      "cost": { "research_data": 100, "electronics": 50 },
-      "prerequisites": ["automation_basics", "fusion_theory"],
-      "effects": [
-        { "type": "unlock_resource", "target": "quantum_cores" },
-        { "type": "global_production_multiplier", "value": 1.2 }
-      ]
-    },
-    {
-      "id": "warp_field_theory",
-      "name": "Warp Field Theory",
-      "description": "Enables warp flux generation.",
-      "icon": "waves",
-      "tier": 3,
-      "cost": { "research_data": 150, "antimatter": 10 },
-      "prerequisites": ["quantum_computing"],
-      "effects": [
-        { "type": "unlock_resource", "target": "warp_flux" }
-      ]
-    },
-    {
-      "id": "artificial_intelligence",
-      "name": "Artificial Intelligence",
-      "description": "Enables AI model creation for full automation.",
-      "icon": "psychology",
-      "tier": 3,
-      "cost": { "research_data": 200, "quantum_cores": 10 },
-      "prerequisites": ["quantum_computing"],
-      "effects": [
-        { "type": "unlock_resource", "target": "ai_models" },
-        { "type": "global_consumption_reduction", "value": 0.8 }
-      ]
+    "effects": {
+      "mining_rig_output": 1.2
     }
-  ]
-}
+  },
+  {
+    "id": "tech_mining_efficiency_2",
+    "name": "Mining Efficiency II",
+    "description": "Mining rigs produce 50% more ore.",
+    "tier": 2,
+    "cost": {
+      "metal": 500
+    },
+    "effects": {
+      "mining_rig_output": 1.5
+    }
+  },
+  {
+    "id": "tech_deep_core_drilling",
+    "name": "Deep Core Drilling",
+    "description": "Unlock deeper asteroid drilling doubling ore yield.",
+    "tier": 3,
+    "cost": {
+      "alloy": 200
+    },
+    "effects": {
+      "ore_production": 2.0
+    }
+  },
+  {
+    "id": "tech_gas_compression",
+    "name": "Gas Compression",
+    "description": "Gas harvesters produce 20% more gas.",
+    "tier": 1,
+    "cost": {
+      "metal": 120
+    },
+    "effects": {
+      "gas_harvester_output": 1.2
+    }
+  },
+  {
+    "id": "tech_atmospheric_siphons",
+    "name": "Atmospheric Siphons",
+    "description": "Advanced siphons increase gas yield by 50%.",
+    "tier": 2,
+    "cost": {
+      "metal": 400
+    },
+    "effects": {
+      "gas_harvester_output": 1.5
+    }
+  },
+  {
+    "id": "tech_cryogenic_extraction",
+    "name": "Cryogenic Extraction",
+    "description": "Ice extractors produce 20% more ice.",
+    "tier": 1,
+    "cost": {
+      "metal": 120
+    },
+    "effects": {
+      "ice_extractor_output": 1.2
+    }
+  },
+  {
+    "id": "tech_glacial_processing",
+    "name": "Glacial Processing",
+    "description": "Improved ice processing increases yield by 50%.",
+    "tier": 2,
+    "cost": {
+      "metal": 400
+    },
+    "effects": {
+      "ice_extractor_output": 1.5
+    }
+  },
+  {
+    "id": "tech_catalytic_refining",
+    "name": "Catalytic Refining",
+    "description": "Ore to metal conversion efficiency +25%.",
+    "tier": 1,
+    "cost": {
+      "metal": 200
+    },
+    "effects": {
+      "ore_to_metal": 1.25
+    }
+  },
+  {
+    "id": "tech_advanced_refining",
+    "name": "Advanced Refining",
+    "description": "Ore to metal conversion efficiency +50%.",
+    "tier": 2,
+    "cost": {
+      "alloy": 200
+    },
+    "effects": {
+      "ore_to_metal": 1.5
+    }
+  },
+  {
+    "id": "tech_polymer_synthesis",
+    "name": "Polymer Synthesis",
+    "description": "Ice to polymers conversion efficiency +25%.",
+    "tier": 1,
+    "cost": {
+      "metal": 200
+    },
+    "effects": {
+      "ice_to_polymers": 1.25
+    }
+  },
+  {
+    "id": "tech_advanced_polymerization",
+    "name": "Advanced Polymerization",
+    "description": "Ice to polymers conversion efficiency +50%.",
+    "tier": 2,
+    "cost": {
+      "alloy": 200
+    },
+    "effects": {
+      "ice_to_polymers": 1.5
+    }
+  },
+  {
+    "id": "tech_fuel_processing",
+    "name": "Fuel Processing",
+    "description": "Gas to fuel conversion efficiency +25%.",
+    "tier": 1,
+    "cost": {
+      "metal": 200
+    },
+    "effects": {
+      "gas_to_fuel": 1.25
+    }
+  },
+  {
+    "id": "tech_advanced_fuel_processing",
+    "name": "Advanced Fuel Processing",
+    "description": "Gas to fuel conversion efficiency +50%.",
+    "tier": 2,
+    "cost": {
+      "alloy": 200
+    },
+    "effects": {
+      "gas_to_fuel": 1.5
+    }
+  },
+  {
+    "id": "tech_alloy_nanoforging",
+    "name": "Alloy Nanoforging",
+    "description": "Alloy foundries produce 40% more alloy.",
+    "tier": 2,
+    "cost": {
+      "electronics": 200
+    },
+    "effects": {
+      "alloy_output": 1.4
+    }
+  },
+  {
+    "id": "tech_precision_circuitry",
+    "name": "Precision Circuitry",
+    "description": "Circuit plants produce 40% more electronics.",
+    "tier": 2,
+    "cost": {
+      "electronics": 200
+    },
+    "effects": {
+      "electronics_output": 1.4
+    }
+  },
+  {
+    "id": "tech_robotic_assembly",
+    "name": "Robotic Assembly",
+    "description": "Assembly plants produce 50% more industrial parts.",
+    "tier": 3,
+    "cost": {
+      "industrial_parts": 100
+    },
+    "effects": {
+      "industrial_parts_output": 1.5
+    }
+  },
+  {
+    "id": "tech_hyper_assembly",
+    "name": "Hyper Assembly",
+    "description": "Advanced robotics double industrial part output.",
+    "tier": 4,
+    "cost": {
+      "industrial_parts": 400
+    },
+    "effects": {
+      "industrial_parts_output": 2.0
+    }
+  },
+  {
+    "id": "tech_shipyard_automation",
+    "name": "Shipyard Automation",
+    "description": "Shipyards build ships 50% faster.",
+    "tier": 3,
+    "cost": {
+      "industrial_parts": 200
+    },
+    "effects": {
+      "ship_production": 1.5
+    }
+  },
+  {
+    "id": "tech_fleet_manufacturing",
+    "name": "Fleet Manufacturing",
+    "description": "Large-scale fleet manufacturing doubles ship production.",
+    "tier": 4,
+    "cost": {
+      "ships": 5
+    },
+    "effects": {
+      "ship_production": 2.0
+    }
+  },
+  {
+    "id": "tech_expanded_storage",
+    "name": "Expanded Storage",
+    "description": "Doubles total resource storage capacity.",
+    "tier": 1,
+    "cost": {
+      "metal": 150
+    },
+    "effects": {
+      "storage_multiplier": 2.0
+    }
+  },
+  {
+    "id": "tech_industrial_warehousing",
+    "name": "Industrial Warehousing",
+    "description": "Triples total resource storage capacity.",
+    "tier": 2,
+    "cost": {
+      "alloy": 150
+    },
+    "effects": {
+      "storage_multiplier": 3.0
+    }
+  },
+  {
+    "id": "tech_planetary_logistics",
+    "name": "Planetary Logistics",
+    "description": "Massive logistical expansion increases storage 5x.",
+    "tier": 3,
+    "cost": {
+      "electronics": 300
+    },
+    "effects": {
+      "storage_multiplier": 5.0
+    }
+  },
+  {
+    "id": "tech_orbital_storage",
+    "name": "Orbital Storage",
+    "description": "Orbital depots expand storage capacity to 8x.",
+    "tier": 4,
+    "cost": {
+      "industrial_parts": 300
+    },
+    "effects": {
+      "storage_multiplier": 8.0
+    }
+  },
+  {
+    "id": "tech_interstellar_logistics",
+    "name": "Interstellar Logistics",
+    "description": "Improved galactic logistics increases all production by 25%.",
+    "tier": 4,
+    "cost": {
+      "ships": 10
+    },
+    "effects": {
+      "global_production": 1.25
+    }
+  }
+]

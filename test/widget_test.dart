@@ -51,9 +51,15 @@ void main() {
       resources: {'credits': credits, 'ore': ore},
       buildings: {'asteroid_mine': mine},
       technologies: {},
+      achievements: {},
+      missions: {},
+      contracts: {},
       resourceList: [credits, ore],
       buildingList: [mine],
       technologyList: [],
+      achievementList: [],
+      missionList: [],
+      contractList: [],
     );
 
     engine = GameEngine(

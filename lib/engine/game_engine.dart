@@ -1,248 +1,384 @@
 import 'dart:math';
-import 'package:flutter/foundation.dart';
-import '../models/config/game_config.dart';
-import '../models/state/game_state.dart';
-import '../models/production_summary.dart';
 
+import 'package:flutter/foundation.dart';
+
+import '../models/config/game_config.dart';
+import '../models/config/technology_config.dart';
+import '../models/production_summary.dart';
+import '../models/state/game_state.dart';
+
+/// Core simulation engine.
+///
+/// - Config-driven (JSON)
+/// - Deterministic tick loop (1s ticks from GameLoopWidget)
+/// - Saves via [GameState]
 class GameEngine extends ChangeNotifier {
   final GameConfig config;
   GameState state;
-  ProductionSummary _cachedSummary;
 
-  static const double maxOfflineSeconds = 14400.0; // 4 hours
+  // Debug / simulation controls
+  double _gameSpeed = 1.0;
 
-  GameEngine({required this.config, required this.state})
-      : _cachedSummary = const ProductionSummary.empty() {
-    _cachedSummary = _computeSummary();
+  ProductionSummary productionSummary = const ProductionSummary.empty();
+
+  // Derived tech effects
+  final Map<String, double> _buildingProductionMult = {}; // buildingId -> mult
+  final Map<String, double> _buildingCostMult = {}; // buildingId -> mult
+  double _globalProductionMult = 1.0;
+  double _globalConsumptionMult = 1.0;
+
+  GameEngine({required this.config, required this.state}) {
+    _recomputeTechEffects();
+    _recomputeProductionSummary();
   }
 
-  ProductionSummary get productionSummary => _cachedSummary;
+  /// Total in-session runtime (driven by [GameState.totalPlaytimeSeconds]).
+  Duration get runtime => Duration(seconds: state.totalPlaytimeSeconds);
 
-  // ---------------------------------------------------------------------------
-  // Game loop
-  // ---------------------------------------------------------------------------
+  /// Multiplier applied to simulation ticks.
+  double get gameSpeed => _gameSpeed;
+  set gameSpeed(double v) {
+    final next = v.isFinite && v > 0 ? v : 1.0;
+    if ((next - _gameSpeed).abs() < 1e-9) return;
+    _gameSpeed = next;
+    notifyListeners();
+  }
 
-  void tick(double deltaSeconds) {
-    _cachedSummary = _computeSummary();
-    _applyProduction(deltaSeconds);
+  // -----------------------------
+  // Tick + offline
+  // -----------------------------
+
+  void tick(double dtSeconds) {
+    final scaledDt = dtSeconds * _gameSpeed;
+    // Update playtime
+    state.totalPlaytimeSeconds += scaledDt.round();
+
+    // Update economy
+    _recomputeTechEffects();
+    final next = _simulate(scaledDt);
+    state.resources = next;
     state.lastTickTimestamp = DateTime.now().millisecondsSinceEpoch;
-    state.totalPlaytimeSeconds += deltaSeconds.floor();
+
+    // UI data
+    _recomputeProductionSummary();
     notifyListeners();
   }
 
-  void processOfflineEarnings() {
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final elapsedMs = now - state.lastTickTimestamp;
-    final elapsedSeconds = elapsedMs / 1000.0;
+  void processOfflineEarnings({int maxHours = 12}) {
+    final now = DateTime.now();
+    final last = DateTime.fromMillisecondsSinceEpoch(state.lastTickTimestamp);
+    final seconds = now.difference(last).inSeconds;
+    if (seconds <= 1) return;
+    final capped = seconds.clamp(0, maxHours * 3600);
 
-    if (elapsedSeconds < 2.0) return;
+    // Simulate in chunks so consumption gating works.
+    int remaining = capped;
+    while (remaining > 0) {
+      final step = min(60, remaining).toDouble();
+      final next = _simulate(step);
+      state.resources = next;
+      remaining -= step.toInt();
+    }
 
-    final cappedSeconds = elapsedSeconds.clamp(0.0, maxOfflineSeconds);
-
-    _cachedSummary = _computeSummary();
-    _applyProduction(cappedSeconds);
-    state.lastTickTimestamp = now;
-    state.totalPlaytimeSeconds += cappedSeconds.floor();
-
+    state.lastTickTimestamp = now.millisecondsSinceEpoch;
+    _recomputeProductionSummary();
     notifyListeners();
   }
 
-  // ---------------------------------------------------------------------------
-  // Production calculation
-  // ---------------------------------------------------------------------------
+  // -----------------------------
+  // Buildings
+  // -----------------------------
 
-  ProductionSummary _computeSummary() {
-    final grossProd = <String, double>{};
-    final grossCons = <String, double>{};
+  bool isUnlocked(String buildingId) {
+    final b = config.buildings[buildingId];
+    if (b == null) return false;
+    final u = b.unlockCondition;
+    if (u == null) return true;
 
-    // Pre-compute tech multipliers
-    final techProdMultipliers = <String, double>{};
-    double globalProdMultiplier = 1.0;
-    double globalConsReduction = 1.0;
-
-    for (final techId in state.unlockedTechs) {
-      final tech = config.technologies[techId];
-      if (tech == null) continue;
-      for (final effect in tech.effects) {
-        switch (effect.type) {
-          case 'production_multiplier':
-            if (effect.target != null) {
-              techProdMultipliers[effect.target!] =
-                  (techProdMultipliers[effect.target!] ?? 1.0) *
-                      (effect.value ?? 1.0);
-            }
-          case 'global_production_multiplier':
-            globalProdMultiplier *= (effect.value ?? 1.0);
-          case 'global_consumption_reduction':
-            globalConsReduction *= (effect.value ?? 1.0);
-          default:
-            break;
-        }
-      }
-    }
-
-    for (final building in config.buildingList) {
-      final level = state.buildingLevels[building.id] ?? 0;
-      if (level <= 0) continue;
-
-      final levelMult =
-          _levelMultiplier(level, building.productionMultiplierPerLevel);
-      final techMult = techProdMultipliers[building.id] ?? 1.0;
-      final totalProdMult = levelMult * techMult * globalProdMultiplier;
-      final totalConsMult = levelMult * globalConsReduction;
-
-      for (final entry in building.produces.entries) {
-        grossProd[entry.key] =
-            (grossProd[entry.key] ?? 0.0) + entry.value * totalProdMult;
-      }
-      for (final entry in building.consumes.entries) {
-        grossCons[entry.key] =
-            (grossCons[entry.key] ?? 0.0) + entry.value * totalConsMult;
-      }
-    }
-
-    final allResourceIds = <String>{...grossProd.keys, ...grossCons.keys};
-    final netRates = <String, double>{};
-    for (final id in allResourceIds) {
-      netRates[id] = (grossProd[id] ?? 0.0) - (grossCons[id] ?? 0.0);
-    }
-
-    final capacities = <String, double>{};
-    for (final r in config.resourceList) {
-      capacities[r.id] = r.baseCapacity;
-    }
-
-    return ProductionSummary(
-      netRates: netRates,
-      grossProduction: grossProd,
-      grossConsumption: grossCons,
-      capacities: capacities,
-    );
-  }
-
-  static double _levelMultiplier(int level, double multiplierPerLevel) {
-    if (multiplierPerLevel == 1.0) {
-      return level.toDouble();
-    }
-    // Geometric series: (m^level - 1) / (m - 1)
-    return (pow(multiplierPerLevel, level) - 1) / (multiplierPerLevel - 1);
-  }
-
-  void _applyProduction(double deltaSeconds) {
-    for (final resourceConfig in config.resourceList) {
-      final id = resourceConfig.id;
-      final netRate = _cachedSummary.netRates[id] ?? 0.0;
-      if (netRate == 0.0) continue;
-
-      final capacity = _cachedSummary.capacities[id] ?? double.infinity;
-      final current = state.resources[id] ?? 0.0;
-      state.resources[id] = (current + netRate * deltaSeconds).clamp(0.0, capacity);
+    switch (u.type) {
+      case 'building_level':
+        final lvl = state.buildingLevels[u.buildingId] ?? 0;
+        return lvl >= (u.level ?? 0);
+      case 'resource_amount':
+        final amt = state.resources[u.resourceId] ?? 0.0;
+        return amt >= (u.amount ?? 0.0);
+      case 'tech_unlocked':
+        // (Reusing field for simplicity)
+        return u.buildingId != null && state.unlockedTechs.contains(u.buildingId);
+      default:
+        return true;
     }
   }
-
-  // ---------------------------------------------------------------------------
-  // Building actions
-  // ---------------------------------------------------------------------------
 
   Map<String, double> getUpgradeCost(String buildingId) {
-    final building = config.buildings[buildingId]!;
-    final currentLevel = state.buildingLevels[buildingId] ?? 0;
-
-    double costReduction = 1.0;
-    for (final techId in state.unlockedTechs) {
-      final tech = config.technologies[techId];
-      if (tech == null) continue;
-      for (final effect in tech.effects) {
-        if (effect.type == 'cost_reduction' && effect.target == buildingId) {
-          costReduction *= (effect.value ?? 1.0);
-        }
-      }
-    }
-
-    return building.baseCost.map((resourceId, baseCost) => MapEntry(
-        resourceId,
-        baseCost * pow(building.costScaling, currentLevel) * costReduction));
+    final b = config.buildings[buildingId];
+    if (b == null) return const {};
+    final level = state.buildingLevels[buildingId] ?? 0;
+    final mult = pow(b.costScaling, level).toDouble();
+    final costMult = _buildingCostMult[buildingId] ?? 1.0;
+    return {
+      for (final e in b.baseCost.entries) e.key: e.value * mult * costMult,
+    };
   }
 
   bool canUpgradeBuilding(String buildingId) {
-    final building = config.buildings[buildingId]!;
-    final currentLevel = state.buildingLevels[buildingId] ?? 0;
-
-    if (currentLevel >= building.maxLevel) return false;
+    final b = config.buildings[buildingId];
+    if (b == null) return false;
     if (!isUnlocked(buildingId)) return false;
-
+    final level = state.buildingLevels[buildingId] ?? 0;
+    if (level >= b.maxLevel) return false;
     final cost = getUpgradeCost(buildingId);
-    return cost.entries.every((e) => (state.resources[e.key] ?? 0.0) >= e.value);
-  }
-
-  bool upgradeBuilding(String buildingId) {
-    if (!canUpgradeBuilding(buildingId)) return false;
-
-    final cost = getUpgradeCost(buildingId);
-    for (final entry in cost.entries) {
-      state.resources[entry.key] = (state.resources[entry.key] ?? 0.0) - entry.value;
+    for (final e in cost.entries) {
+      if ((state.resources[e.key] ?? 0.0) < e.value) return false;
     }
-    state.buildingLevels[buildingId] =
-        (state.buildingLevels[buildingId] ?? 0) + 1;
-
-    _cachedSummary = _computeSummary();
-    notifyListeners();
     return true;
   }
 
-  // ---------------------------------------------------------------------------
-  // Technology actions
-  // ---------------------------------------------------------------------------
+  void upgradeBuilding(String buildingId) {
+    if (!canUpgradeBuilding(buildingId)) return;
+    final cost = getUpgradeCost(buildingId);
+    for (final e in cost.entries) {
+      state.resources[e.key] = (state.resources[e.key] ?? 0.0) - e.value;
+    }
+    state.buildingLevels[buildingId] = (state.buildingLevels[buildingId] ?? 0) + 1;
+    _recomputeProductionSummary();
+    notifyListeners();
+  }
+
+  // -----------------------------
+  // Tech
+  // -----------------------------
 
   bool canResearchTech(String techId) {
-    final tech = config.technologies[techId];
-    if (tech == null) return false;
+    final t = config.technologies[techId];
+    if (t == null) return false;
     if (state.unlockedTechs.contains(techId)) return false;
-
-    // Check prerequisites
-    for (final prereq in tech.prerequisites) {
-      if (!state.unlockedTechs.contains(prereq)) return false;
+    if (!t.prerequisites.every(state.unlockedTechs.contains)) return false;
+    for (final e in t.cost.entries) {
+      if ((state.resources[e.key] ?? 0.0) < e.value) return false;
     }
-
-    // Check cost
-    return tech.cost.entries
-        .every((e) => (state.resources[e.key] ?? 0.0) >= e.value);
-  }
-
-  bool researchTech(String techId) {
-    if (!canResearchTech(techId)) return false;
-
-    final tech = config.technologies[techId]!;
-    for (final entry in tech.cost.entries) {
-      state.resources[entry.key] =
-          (state.resources[entry.key] ?? 0.0) - entry.value;
-    }
-    state.unlockedTechs.add(techId);
-
-    _cachedSummary = _computeSummary();
-    notifyListeners();
     return true;
   }
 
-  // ---------------------------------------------------------------------------
-  // Unlock checks
-  // ---------------------------------------------------------------------------
-
-  bool isUnlocked(String buildingId) {
-    final condition = config.buildings[buildingId]?.unlockCondition;
-    if (condition == null) return true;
-
-    switch (condition.type) {
-      case 'building_level':
-        return (state.buildingLevels[condition.buildingId] ?? 0) >=
-            (condition.level ?? 0);
-      case 'resource_amount':
-        return (state.resources[condition.resourceId] ?? 0.0) >=
-            (condition.amount ?? 0.0);
-      case 'prestige_level':
-        return false; // Not implemented in Phase 1
-      default:
-        return false;
+  void researchTech(String techId) {
+    if (!canResearchTech(techId)) return;
+    final t = config.technologies[techId]!;
+    for (final e in t.cost.entries) {
+      state.resources[e.key] = (state.resources[e.key] ?? 0.0) - e.value;
     }
+    state.unlockedTechs.add(techId);
+    _recomputeTechEffects();
+    _recomputeProductionSummary();
+    notifyListeners();
+  }
+
+  void _recomputeTechEffects() {
+    _buildingProductionMult.clear();
+    _buildingCostMult.clear();
+    _globalProductionMult = 1.0;
+    _globalConsumptionMult = 1.0;
+
+    for (final techId in state.unlockedTechs) {
+      final tech = config.technologies[techId];
+      if (tech == null) continue;
+      for (final e in tech.effects) {
+        _applyEffect(e);
+      }
+    }
+  }
+
+  void _applyEffect(TechEffect e) {
+    switch (e.type) {
+      case 'production_multiplier':
+        if (e.target == null || e.value == null) return;
+        _buildingProductionMult[e.target!] =
+            (_buildingProductionMult[e.target!] ?? 1.0) * e.value!;
+        return;
+      case 'cost_reduction':
+        if (e.target == null || e.value == null) return;
+        _buildingCostMult[e.target!] =
+            (_buildingCostMult[e.target!] ?? 1.0) * e.value!;
+        return;
+      case 'global_production_multiplier':
+        if (e.value == null) return;
+        _globalProductionMult *= e.value!;
+        return;
+      case 'global_consumption_reduction':
+        if (e.value == null) return;
+        _globalConsumptionMult *= e.value!;
+        return;
+      default:
+        // Unknown effects ignored for now.
+        return;
+    }
+  }
+
+  // -----------------------------
+  // Contracts
+  // -----------------------------
+
+  bool isContractCompleted(String contractId) =>
+      state.completedContracts.contains(contractId);
+
+  bool canCompleteContract(String contractId) {
+    final c = config.contracts[contractId];
+    if (c == null) return false;
+    if (isContractCompleted(contractId) && !c.repeatable) return false;
+
+    for (final r in c.requirements) {
+      if (r.resourceId != null) {
+        final have = state.resources[r.resourceId!] ?? 0.0;
+        if (have < r.amount) return false;
+      }
+      if (r.buildingId != null) {
+        final lvl = state.buildingLevels[r.buildingId!] ?? 0;
+        if (lvl < r.amount) return false;
+      }
+    }
+    return true;
+  }
+
+  void completeContract(String contractId) {
+    if (!canCompleteContract(contractId)) return;
+    final c = config.contracts[contractId]!;
+
+    // Spend resource requirements (building requirements are checks only)
+    for (final r in c.requirements) {
+      if (r.resourceId != null) {
+        state.resources[r.resourceId!] =
+            (state.resources[r.resourceId!] ?? 0.0) - r.amount;
+      }
+    }
+
+    // Apply rewards
+    for (final e in c.rewards.entries) {
+      state.resources[e.key] = (state.resources[e.key] ?? 0.0) + e.value;
+    }
+
+    if (!c.repeatable) {
+      state.completedContracts.add(contractId);
+    }
+
+    _recomputeProductionSummary();
+    notifyListeners();
+  }
+
+  // -----------------------------
+  // Economy simulation
+  // -----------------------------
+
+  Map<String, double> _simulate(double dtSeconds) {
+    final next = Map<String, double>.from(state.resources);
+
+    // Capacities: currently driven by resource config baseCapacity.
+    final capacities = <String, double>{
+      for (final r in config.resourceList) r.id: r.baseCapacity,
+    };
+
+    final delta = <String, double>{};
+
+    for (final b in config.buildingList) {
+      final level = state.buildingLevels[b.id] ?? 0;
+      if (level <= 0) continue;
+      if (!isUnlocked(b.id)) continue;
+
+      final prodMult = _buildingProductionMult[b.id] ?? 1.0;
+      final baseMult = pow(b.productionMultiplierPerLevel, max(0, level - 1)).toDouble();
+
+      final producesPerSec = {
+        for (final e in b.produces.entries)
+          e.key: e.value * level * baseMult * prodMult * _globalProductionMult,
+      };
+      final consumesPerSec = {
+        for (final e in b.consumes.entries)
+          e.key: e.value * level * baseMult * _globalConsumptionMult,
+      };
+
+      double factor = 1.0;
+
+      // Input gating
+      for (final e in consumesPerSec.entries) {
+        final need = e.value * dtSeconds;
+        if (need <= 0) continue;
+        final have = next[e.key] ?? 0.0;
+        if (have <= 0) {
+          factor = 0.0;
+          break;
+        }
+        factor = min(factor, have / need);
+      }
+      if (factor <= 0) continue;
+
+      // Output gating (caps)
+      for (final e in producesPerSec.entries) {
+        final out = e.value * dtSeconds;
+        if (out <= 0) continue;
+        final cap = capacities[e.key] ?? double.infinity;
+        if (cap.isFinite) {
+          final have = next[e.key] ?? 0.0;
+          final remaining = max(0.0, cap - have);
+          if (remaining <= 0) {
+            factor = 0.0;
+            break;
+          }
+          factor = min(factor, remaining / out);
+        }
+      }
+      if (factor <= 0) continue;
+
+      for (final e in consumesPerSec.entries) {
+        final amt = e.value * dtSeconds * factor;
+        delta[e.key] = (delta[e.key] ?? 0.0) - amt;
+      }
+      for (final e in producesPerSec.entries) {
+        final amt = e.value * dtSeconds * factor;
+        delta[e.key] = (delta[e.key] ?? 0.0) + amt;
+      }
+    }
+
+    for (final e in delta.entries) {
+      final cap = capacities[e.key] ?? double.infinity;
+      final cur = next[e.key] ?? 0.0;
+      final v = cur + e.value;
+      next[e.key] = v.clamp(0.0, cap.isFinite ? cap : double.infinity);
+    }
+
+    return next;
+  }
+
+  void _recomputeProductionSummary() {
+    final net = <String, double>{};
+    final grossProd = <String, double>{};
+    final grossCons = <String, double>{};
+    final caps = <String, double>{
+      for (final r in config.resourceList) r.id: r.baseCapacity,
+    };
+
+    for (final b in config.buildingList) {
+      final level = state.buildingLevels[b.id] ?? 0;
+      if (level <= 0) continue;
+      if (!isUnlocked(b.id)) continue;
+
+      final prodMult = _buildingProductionMult[b.id] ?? 1.0;
+      final baseMult = pow(b.productionMultiplierPerLevel, max(0, level - 1)).toDouble();
+
+      for (final e in b.produces.entries) {
+        final v = e.value * level * baseMult * prodMult * _globalProductionMult;
+        net[e.key] = (net[e.key] ?? 0.0) + v;
+        grossProd[e.key] = (grossProd[e.key] ?? 0.0) + v;
+      }
+      for (final e in b.consumes.entries) {
+        final v = e.value * level * baseMult * _globalConsumptionMult;
+        net[e.key] = (net[e.key] ?? 0.0) - v;
+        grossCons[e.key] = (grossCons[e.key] ?? 0.0) + v;
+      }
+    }
+
+    productionSummary = ProductionSummary(
+      netRates: net,
+      grossProduction: grossProd,
+      grossConsumption: grossCons,
+      capacities: caps,
+    );
   }
 }
