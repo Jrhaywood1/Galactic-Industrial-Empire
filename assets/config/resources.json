@@ -1,0 +1,224 @@
+{
+  "resources": [
+    {
+      "id": "credits",
+      "name": "Credits",
+      "tier": 0,
+      "icon": "monetization_on",
+      "color": "#FFD700",
+      "description": "Universal currency used for basic transactions.",
+      "baseCapacity": 1000,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "gems",
+      "name": "Gems",
+      "tier": 0,
+      "icon": "diamond",
+      "color": "#00BFFF",
+      "description": "Premium currency earned through achievements.",
+      "baseCapacity": 100,
+      "capacityGrowth": 1.2
+    },
+    {
+      "id": "ore",
+      "name": "Ore",
+      "tier": 1,
+      "icon": "landscape",
+      "color": "#B87333",
+      "description": "Raw mineral ore extracted from asteroids.",
+      "baseCapacity": 500,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "ice",
+      "name": "Ice",
+      "tier": 1,
+      "icon": "ac_unit",
+      "color": "#ADD8E6",
+      "description": "Frozen volatiles harvested from comets and asteroids.",
+      "baseCapacity": 500,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "silicates",
+      "name": "Silicates",
+      "tier": 1,
+      "icon": "grain",
+      "color": "#C2B280",
+      "description": "Silicate minerals used in electronics and construction.",
+      "baseCapacity": 500,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "energy",
+      "name": "Energy",
+      "tier": 1,
+      "icon": "bolt",
+      "color": "#FFFF00",
+      "description": "Power generated from solar and fusion sources.",
+      "baseCapacity": 1000,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "parts",
+      "name": "Parts",
+      "tier": 1,
+      "icon": "settings",
+      "color": "#808080",
+      "description": "Mechanical components assembled from raw materials.",
+      "baseCapacity": 300,
+      "capacityGrowth": 1.5
+    },
+    {
+      "id": "alloys",
+      "name": "Alloys",
+      "tier": 2,
+      "icon": "view_in_ar",
+      "color": "#C0C0C0",
+      "description": "Advanced metal alloys refined from ore.",
+      "baseCapacity": 200,
+      "capacityGrowth": 1.4
+    },
+    {
+      "id": "polymer",
+      "name": "Polymer",
+      "tier": 2,
+      "icon": "bubble_chart",
+      "color": "#32CD32",
+      "description": "Synthetic polymers for advanced construction.",
+      "baseCapacity": 200,
+      "capacityGrowth": 1.4
+    },
+    {
+      "id": "electronics",
+      "name": "Electronics",
+      "tier": 2,
+      "icon": "memory",
+      "color": "#4169E1",
+      "description": "Precision electronics for computing and control systems.",
+      "baseCapacity": 150,
+      "capacityGrowth": 1.4
+    },
+    {
+      "id": "fuel",
+      "name": "Fuel",
+      "tier": 2,
+      "icon": "local_gas_station",
+      "color": "#FF4500",
+      "description": "Refined propellant for reactors and ships.",
+      "baseCapacity": 300,
+      "capacityGrowth": 1.4
+    },
+    {
+      "id": "research_data",
+      "name": "Research Data",
+      "tier": 2,
+      "icon": "science",
+      "color": "#9370DB",
+      "description": "Scientific data used to unlock technologies.",
+      "baseCapacity": 100,
+      "capacityGrowth": 1.3
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics",
+      "tier": 2,
+      "icon": "local_shipping",
+      "color": "#DAA520",
+      "description": "Supply chain capacity for moving goods.",
+      "baseCapacity": 100,
+      "capacityGrowth": 1.3
+    },
+    {
+      "id": "capacity",
+      "name": "Capacity",
+      "tier": 2,
+      "icon": "storage",
+      "color": "#708090",
+      "description": "Industrial capacity for expansion.",
+      "baseCapacity": 100,
+      "capacityGrowth": 1.3
+    },
+    {
+      "id": "antimatter",
+      "name": "Antimatter",
+      "tier": 3,
+      "icon": "flare",
+      "color": "#FF00FF",
+      "description": "Exotic matter with immense energy potential.",
+      "baseCapacity": 50,
+      "capacityGrowth": 1.2
+    },
+    {
+      "id": "quantum_cores",
+      "name": "Quantum Cores",
+      "tier": 3,
+      "icon": "blur_on",
+      "color": "#00FFFF",
+      "description": "Quantum computing cores for advanced processing.",
+      "baseCapacity": 50,
+      "capacityGrowth": 1.2
+    },
+    {
+      "id": "dark_matter",
+      "name": "Dark Matter",
+      "tier": 3,
+      "icon": "nights_stay",
+      "color": "#4B0082",
+      "description": "Mysterious substance gained through galaxy resets.",
+      "baseCapacity": 25,
+      "capacityGrowth": 1.15
+    },
+    {
+      "id": "warp_flux",
+      "name": "Warp Flux",
+      "tier": 3,
+      "icon": "waves",
+      "color": "#7B68EE",
+      "description": "Spacetime distortion energy for faster-than-light travel.",
+      "baseCapacity": 25,
+      "capacityGrowth": 1.15
+    },
+    {
+      "id": "ai_models",
+      "name": "AI Models",
+      "tier": 3,
+      "icon": "psychology",
+      "color": "#00FA9A",
+      "description": "Artificial intelligence models for automation.",
+      "baseCapacity": 25,
+      "capacityGrowth": 1.15
+    },
+    {
+      "id": "singularity_shards",
+      "name": "Singularity Shards",
+      "tier": 4,
+      "icon": "auto_awesome",
+      "color": "#FF1493",
+      "description": "Fragments of collapsed universes. Gained through universe collapse.",
+      "baseCapacity": 10,
+      "capacityGrowth": 1.1
+    },
+    {
+      "id": "cosmic_constants",
+      "name": "Cosmic Constants",
+      "tier": 4,
+      "icon": "all_inclusive",
+      "color": "#FFD700",
+      "description": "Fundamental constants that persist across multiverses.",
+      "baseCapacity": 5,
+      "capacityGrowth": 1.05
+    },
+    {
+      "id": "entropy",
+      "name": "Entropy",
+      "tier": 4,
+      "icon": "thermostat",
+      "color": "#DC143C",
+      "description": "The measure of universal decay. A meta-resource.",
+      "baseCapacity": 10,
+      "capacityGrowth": 1.1
+    }
+  ]
+}

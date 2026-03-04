@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter --version)",
+      "Bash(export PATH=\"/c/Users/jrhay/flutter/bin:$PATH\")",
+      "Bash(flutter create --org com.galacticempire --project-name galactic_industrial_empire --platforms android,ios .)",
+      "Bash(flutter pub get)",
+      "Bash(where flutter)",
+      "Bash(cmd.exe /c \"where flutter\")",
+      "Bash(cmd.exe /c \"flutter pub get\")",
+      "Bash(/c/Users/jrhay/flutter/bin/flutter pub get)",
+      "Bash(/c/Users/jrhay/flutter/bin/flutter analyze)",
+      "Bash(/c/Users/jrhay/flutter/bin/flutter test)"
+    ]
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "achievements": [
+    {
+      "id": "first_mine",
+      "name": "First Strike",
+      "description": "Build your first Asteroid Mine.",
+      "icon": "hardware",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "asteroid_mine", "level": 1 },
+      "reward": { "gems": 1 }
+    },
+    {
+      "id": "mine_10",
+      "name": "Strip Mining",
+      "description": "Upgrade Asteroid Mine to level 10.",
+      "icon": "hardware",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "asteroid_mine", "level": 10 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "mine_50",
+      "name": "Deep Core Extraction",
+      "description": "Upgrade Asteroid Mine to level 50.",
+      "icon": "hardware",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "asteroid_mine", "level": 50 },
+      "reward": { "gems": 15 }
+    },
+    {
+      "id": "ice_unlocked",
+      "name": "Cold Start",
+      "description": "Build your first Ice Harvester.",
+      "icon": "ac_unit",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "ice_harvester", "level": 1 },
+      "reward": { "gems": 2 }
+    },
+    {
+      "id": "solar_unlocked",
+      "name": "Let There Be Light",
+      "description": "Build your first Solar Array.",
+      "icon": "wb_sunny",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "solar_array", "level": 1 },
+      "reward": { "gems": 2 }
+    },
+    {
+      "id": "assembler_unlocked",
+      "name": "Assembly Required",
+      "description": "Build your first Assembler Bay.",
+      "icon": "precision_manufacturing",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "assembler_bay", "level": 1 },
+      "reward": { "gems": 3 }
+    },
+    {
+      "id": "credits_1000",
+      "name": "Pocket Change",
+      "description": "Accumulate 1,000 Credits.",
+      "icon": "monetization_on",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "credits", "amount": 1000 },
+      "reward": { "gems": 3 }
+    },
+    {
+      "id": "credits_100k",
+      "name": "Corporate Account",
+      "description": "Accumulate 100,000 Credits.",
+      "icon": "monetization_on",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "credits", "amount": 100000 },
+      "reward": { "gems": 10 }
+    },
+    {
+      "id": "ore_500",
+      "name": "Ore Hoarder",
+      "description": "Accumulate 500 Ore.",
+      "icon": "landscape",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "ore", "amount": 500 },
+      "reward": { "gems": 3 }
+    },
+    {
+      "id": "energy_1000",
+      "name": "Power Surge",
+      "description": "Accumulate 1,000 Energy.",
+      "icon": "bolt",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "energy", "amount": 1000 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "first_alloy",
+      "name": "Metallurgist",
+      "description": "Produce your first Alloy.",
+      "icon": "view_in_ar",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "alloys", "amount": 1 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "first_electronics",
+      "name": "Circuit Board",
+      "description": "Produce your first Electronics.",
+      "icon": "memory",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "electronics", "amount": 1 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "first_research",
+      "name": "Eureka!",
+      "description": "Generate your first Research Data.",
+      "icon": "science",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "research_data", "amount": 1 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "first_tech",
+      "name": "Breakthrough",
+      "description": "Research your first technology.",
+      "icon": "science",
+      "category": "progression",
+      "condition": { "type": "tech_count", "count": 1 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "tech_5",
+      "name": "Scholar",
+      "description": "Research 5 technologies.",
+      "icon": "science",
+      "category": "progression",
+      "condition": { "type": "tech_count", "count": 5 },
+      "reward": { "gems": 15 }
+    },
+    {
+      "id": "all_tier1_buildings",
+      "name": "Foundation Layer",
+      "description": "Build all Tier 1 buildings.",
+      "icon": "domain",
+      "category": "collection",
+      "condition": { "type": "all_buildings_tier", "tier": 1 },
+      "reward": { "gems": 10 }
+    },
+    {
+      "id": "refinery_unlocked",
+      "name": "Refinery Online",
+      "description": "Build your first Moon Refinery.",
+      "icon": "factory",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "moon_refinery", "level": 1 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "fusion_unlocked",
+      "name": "Fusion Power",
+      "description": "Build your first Fusion Reactor.",
+      "icon": "blur_circular",
+      "category": "progression",
+      "condition": { "type": "building_level", "buildingId": "fusion_reactor", "level": 1 },
+      "reward": { "gems": 10 }
+    },
+    {
+      "id": "antimatter_1",
+      "name": "Exotic Matter",
+      "description": "Produce your first Antimatter.",
+      "icon": "flare",
+      "category": "production",
+      "condition": { "type": "resource_amount", "resourceId": "antimatter", "amount": 1 },
+      "reward": { "gems": 15 }
+    },
+    {
+      "id": "total_buildings_50",
+      "name": "Industrial Complex",
+      "description": "Have 50 total building levels.",
+      "icon": "domain",
+      "category": "collection",
+      "condition": { "type": "total_building_levels", "count": 50 },
+      "reward": { "gems": 10 }
+    },
+    {
+      "id": "total_buildings_200",
+      "name": "Mega Corporation",
+      "description": "Have 200 total building levels.",
+      "icon": "domain",
+      "category": "collection",
+      "condition": { "type": "total_building_levels", "count": 200 },
+      "reward": { "gems": 25 }
+    },
+    {
+      "id": "play_30min",
+      "name": "Getting Started",
+      "description": "Play for 30 minutes.",
+      "icon": "timer",
+      "category": "time",
+      "condition": { "type": "playtime_seconds", "seconds": 1800 },
+      "reward": { "gems": 3 }
+    },
+    {
+      "id": "play_2hr",
+      "name": "Dedicated Worker",
+      "description": "Play for 2 hours.",
+      "icon": "timer",
+      "category": "time",
+      "condition": { "type": "playtime_seconds", "seconds": 7200 },
+      "reward": { "gems": 10 }
+    },
+    {
+      "id": "missions_5",
+      "name": "Contractor",
+      "description": "Complete 5 missions.",
+      "icon": "assignment_turned_in",
+      "category": "progression",
+      "condition": { "type": "missions_completed", "count": 5 },
+      "reward": { "gems": 5 }
+    },
+    {
+      "id": "missions_25",
+      "name": "Reliable Partner",
+      "description": "Complete 25 missions.",
+      "icon": "assignment_turned_in",
+      "category": "progression",
+      "condition": { "type": "missions_completed", "count": 25 },
+      "reward": { "gems": 15 }
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "technologies": [
+    {
+      "id": "basic_mining",
+      "name": "Basic Mining",
+      "description": "Improves ore extraction efficiency.",
+      "icon": "hardware",
+      "tier": 1,
+      "cost": { "research_data": 5 },
+      "prerequisites": [],
+      "effects": [
+        { "type": "production_multiplier", "target": "asteroid_mine", "value": 1.5 }
+      ]
+    },
+    {
+      "id": "advanced_extraction",
+      "name": "Advanced Extraction",
+      "description": "Further improves mining and harvesting output.",
+      "icon": "engineering",
+      "tier": 1,
+      "cost": { "research_data": 15 },
+      "prerequisites": ["basic_mining"],
+      "effects": [
+        { "type": "production_multiplier", "target": "asteroid_mine", "value": 2.0 },
+        { "type": "production_multiplier", "target": "ice_harvester", "value": 1.5 }
+      ]
+    },
+    {
+      "id": "solar_efficiency",
+      "name": "Solar Efficiency",
+      "description": "Increases energy output from solar arrays.",
+      "icon": "wb_sunny",
+      "tier": 1,
+      "cost": { "research_data": 10 },
+      "prerequisites": [],
+      "effects": [
+        { "type": "production_multiplier", "target": "solar_array", "value": 2.0 }
+      ]
+    },
+    {
+      "id": "alloy_science",
+      "name": "Alloy Science",
+      "description": "Improves alloy refining processes.",
+      "icon": "view_in_ar",
+      "tier": 2,
+      "cost": { "research_data": 30 },
+      "prerequisites": ["advanced_extraction"],
+      "effects": [
+        { "type": "production_multiplier", "target": "moon_refinery", "value": 1.5 },
+        { "type": "cost_reduction", "target": "moon_refinery", "value": 0.9 }
+      ]
+    },
+    {
+      "id": "automation_basics",
+      "name": "Automation Basics",
+      "description": "Reduces resource consumption across all buildings.",
+      "icon": "smart_toy",
+      "tier": 2,
+      "cost": { "research_data": 40, "electronics": 20 },
+      "prerequisites": ["alloy_science"],
+      "effects": [
+        { "type": "global_consumption_reduction", "value": 0.9 }
+      ]
+    },
+    {
+      "id": "fusion_theory",
+      "name": "Fusion Theory",
+      "description": "Unlocks fusion reactor improvements.",
+      "icon": "blur_circular",
+      "tier": 2,
+      "cost": { "research_data": 50 },
+      "prerequisites": ["solar_efficiency"],
+      "effects": [
+        { "type": "production_multiplier", "target": "fusion_reactor", "value": 2.0 }
+      ]
+    },
+    {
+      "id": "quantum_computing",
+      "name": "Quantum Computing",
+      "description": "Enables quantum core production.",
+      "icon": "blur_on",
+      "tier": 3,
+      "cost": { "research_data": 100, "electronics": 50 },
+      "prerequisites": ["automation_basics", "fusion_theory"],
+      "effects": [
+        { "type": "unlock_resource", "target": "quantum_cores" },
+        { "type": "global_production_multiplier", "value": 1.2 }
+      ]
+    },
+    {
+      "id": "warp_field_theory",
+      "name": "Warp Field Theory",
+      "description": "Enables warp flux generation.",
+      "icon": "waves",
+      "tier": 3,
+      "cost": { "research_data": 150, "antimatter": 10 },
+      "prerequisites": ["quantum_computing"],
+      "effects": [
+        { "type": "unlock_resource", "target": "warp_flux" }
+      ]
+    },
+    {
+      "id": "artificial_intelligence",
+      "name": "Artificial Intelligence",
+      "description": "Enables AI model creation for full automation.",
+      "icon": "psychology",
+      "tier": 3,
+      "cost": { "research_data": 200, "quantum_cores": 10 },
+      "prerequisites": ["quantum_computing"],
+      "effects": [
+        { "type": "unlock_resource", "target": "ai_models" },
+        { "type": "global_consumption_reduction", "value": 0.8 }
+      ]
+    }
+  ]
+}
