@@ -46,10 +46,11 @@ class _EmpireScreenState extends State<EmpireScreen> {
   @override
   Widget build(BuildContext context) {
     final engine = context.read<GameEngine>();
-    final _ = context.select<GameEngine, int>((e) => e.state.unlockedBuildings.length);
+    context.select<GameEngine, int>((e) => e.state.unlockedBuildings.length);
+    context.select<GameEngine, String>((e) => e.currentPlanetId);
 
     final tiers = _groupByTier(
-      engine.config.buildingList
+      engine.activeBuildingList
           .where((b) => engine.state.unlockedBuildings.contains(b.id))
           .toList(growable: false),
     );
@@ -236,6 +237,7 @@ class _EmpireTopBar extends StatelessWidget {
         research: engine.state.resources['research_data'] ?? 0.0,
         hasShips: (engine.state.resources['ships'] ?? 0.0) > 0.0,
         ships: engine.state.resources['ships'] ?? 0.0,
+        currentPlanetId: engine.currentPlanetId,
       ),
       builder: (context, data, _) {
         return Padding(
@@ -269,6 +271,38 @@ class _EmpireTopBar extends StatelessWidget {
                   ],
                 ),
               ),
+              OutlinedButton.icon(
+                onPressed: () async {
+                  final engine = context.read<GameEngine>();
+                  await showModalBottomSheet<void>(
+                    context: context,
+                    builder: (sheetContext) {
+                      final planets = engine.config.planetList;
+                      return ListView(
+                        children: planets.map((planet) {
+                          final unlocked = engine.isPlanetUnlocked(planet.id);
+                          final active = engine.currentPlanetId == planet.id;
+                          return ListTile(
+                            title: Text(planet.name),
+                            subtitle: Text(planet.id),
+                            enabled: unlocked,
+                            trailing: active ? const Icon(Icons.check) : null,
+                            onTap: !unlocked
+                                ? null
+                                : () {
+                                    engine.switchPlanet(planet.id);
+                                    Navigator.of(sheetContext).pop();
+                                  },
+                          );
+                        }).toList(growable: false),
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(Icons.public, size: 16),
+                label: Text(data.currentPlanetId),
+              ),
+              const SizedBox(width: 8),
               IconButton.filledTonal(
                 tooltip: 'Settings',
                 onPressed: () {
@@ -648,12 +682,14 @@ class _TopBarData {
   final double research;
   final bool hasShips;
   final double ships;
+  final String currentPlanetId;
 
   const _TopBarData({
     required this.credits,
     required this.research,
     required this.hasShips,
     required this.ships,
+    required this.currentPlanetId,
   });
 
   @override
@@ -663,11 +699,12 @@ class _TopBarData {
         other.credits == credits &&
         other.research == research &&
         other.hasShips == hasShips &&
-        other.ships == ships;
+        other.ships == ships &&
+        other.currentPlanetId == currentPlanetId;
   }
 
   @override
-  int get hashCode => Object.hash(credits, research, hasShips, ships);
+  int get hashCode => Object.hash(credits, research, hasShips, ships, currentPlanetId);
 }
 
 @immutable

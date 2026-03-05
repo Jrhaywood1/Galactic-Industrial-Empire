@@ -4,6 +4,8 @@ import 'technology_config.dart';
 import 'achievement_config.dart';
 import 'mission_config.dart';
 import 'contract_config.dart';
+import 'planet_config.dart';
+import 'planet_unlock_config.dart';
 
 class GameConfig {
   final Map<String, ResourceConfig> resources;
@@ -20,6 +22,9 @@ class GameConfig {
   final List<MissionConfig> missionList;
   final List<ContractConfig> contractList;
 
+  final List<PlanetConfig> planetList;
+  final List<PlanetUnlockConfig> planetUnlocks;
+
   const GameConfig({
     required this.resources,
     required this.buildings,
@@ -33,5 +38,7 @@ class GameConfig {
     required this.achievementList,
     required this.missionList,
     required this.contractList,
+    this.planetList = const <PlanetConfig>[],
+    this.planetUnlocks = const <PlanetUnlockConfig>[],
   });
 }

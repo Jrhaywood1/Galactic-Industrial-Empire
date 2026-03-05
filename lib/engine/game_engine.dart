@@ -6,6 +6,7 @@ import '../models/config/building_config.dart';
 import '../models/config/contract_config.dart';
 import '../models/config/game_config.dart';
 import '../models/config/mission_config.dart';
+import '../models/config/planet_unlock_config.dart';
 import '../models/config/technology_config.dart';
 import '../models/production_summary.dart';
 import '../models/state/game_state.dart';
@@ -116,6 +117,32 @@ class GameEngine extends ChangeNotifier {
 
   Duration get runtime => DateTime.now().difference(startedAt);
 
+  String get currentPlanetId => state.currentPlanetId;
+
+  List<String> get unlockedPlanetIds {
+    final ids = state.unlockedPlanets.toList(growable: false)..sort();
+    return ids;
+  }
+
+  List<BuildingConfig> get activeBuildingList {
+    return List<BuildingConfig>.from(_activeSimulationBuildings, growable: false);
+  }
+
+  bool isPlanetUnlocked(String planetId) {
+    return state.unlockedPlanets.contains(planetId);
+  }
+
+  bool switchPlanet(String planetId) {
+    if (!isPlanetUnlocked(planetId)) return false;
+    if (state.currentPlanetId == planetId) return true;
+    state.currentPlanetId = planetId;
+    _activeIndustryPlanetId = '';
+    _recomputeProductionSummary();
+    notifyListeners();
+    return true;
+  }
+
+
   // Derived tech effects
   final Map<String, double> _buildingProductionMult = {}; // buildingId -> mult
   final Map<String, double> _buildingCostMult = {}; // buildingId -> mult
@@ -129,6 +156,8 @@ class GameEngine extends ChangeNotifier {
   final Map<String, BuildingFlowState> _buildingFlowStates = {};
   final Map<String, double> _buildingEffectiveOutputRates = {};
   final Map<String, bool> _buildingBoostedStates = {};
+  String _activeIndustryPlanetId = '';
+  List<BuildingConfig> _activeIndustryCache = const <BuildingConfig>[];
 
   // Cached milestone resolution, invalidated only when owned count changes.
   final Map<String, int> _milestoneResolvedOwnedCount = {};
@@ -169,6 +198,7 @@ class GameEngine extends ChangeNotifier {
 
     _updateCycleProgress(scaledDt, simulation.stepsByBuilding);
     _captureRuntimeBuildingState(simulation.stepsByBuilding);
+    _evaluatePlanetUnlocks();
 
     // UI data
     _recomputeProductionSummary();
@@ -502,6 +532,35 @@ class GameEngine extends ChangeNotifier {
     }
     return count;
   }
+  void _evaluatePlanetUnlocks() {
+    for (final rule in config.planetUnlocks) {
+      if (rule.planetId.isEmpty) continue;
+      if (state.unlockedPlanets.contains(rule.planetId)) continue;
+
+      final checks =
+          rule.conditions.map(_isPlanetUnlockConditionMet).toList(growable: false);
+      if (checks.isEmpty) continue;
+
+      final mode = rule.mode.toLowerCase();
+      final unlocked = mode == 'any' ? checks.any((v) => v) : checks.every((v) => v);
+      if (unlocked) {
+        state.unlockedPlanets.add(rule.planetId);
+      }
+    }
+  }
+
+  bool _isPlanetUnlockConditionMet(PlanetUnlockCondition c) {
+    switch (c.type) {
+      case 'resource_amount':
+        if (c.resourceId == null) return false;
+        return (state.resources[c.resourceId!] ?? 0.0) >= (c.amount ?? 0.0);
+      case 'building_level':
+        if (c.buildingId == null) return false;
+        return (state.buildingLevels[c.buildingId!] ?? 0) >= (c.level ?? 0);
+      default:
+        return false;
+    }
+  }
 
   // -----------------------------
   // Tech
@@ -709,7 +768,7 @@ class GameEngine extends ChangeNotifier {
     final delta = <String, double>{};
     final stepsByBuilding = <String, _BuildingStep>{};
 
-    for (final b in config.buildingList) {
+    for (final b in _activeSimulationBuildings) {
       final level = state.buildingLevels[b.id] ?? 0;
       final step = _evaluateBuildingStep(b, level, dtSeconds, next, capacities);
       stepsByBuilding[b.id] = step;
@@ -840,7 +899,7 @@ class GameEngine extends ChangeNotifier {
     double dtSeconds,
     Map<String, _BuildingStep> stepsByBuilding,
   ) {
-    for (final b in config.buildingList) {
+    for (final b in _activeSimulationBuildings) {
       final level = state.buildingLevels[b.id] ?? 0;
       final cycle = max(0.25, b.cycleSeconds);
       final step = stepsByBuilding[b.id] ?? const _BuildingStep.idle();
@@ -861,7 +920,7 @@ class GameEngine extends ChangeNotifier {
   }
 
   void _captureRuntimeBuildingState(Map<String, _BuildingStep> stepsByBuilding) {
-    for (final b in config.buildingList) {
+    for (final b in _activeSimulationBuildings) {
       final step = stepsByBuilding[b.id] ?? const _BuildingStep.idle();
       final level = state.buildingLevels[b.id] ?? 0;
       if (level <= 0 || !isUnlocked(b.id)) {
@@ -900,7 +959,7 @@ class GameEngine extends ChangeNotifier {
     final grossCons = <String, double>{};
     final caps = _resourceCapacities();
 
-    for (final b in config.buildingList) {
+    for (final b in _activeSimulationBuildings) {
       final level = state.buildingLevels[b.id] ?? 0;
       if (level <= 0) continue;
       if (!isUnlocked(b.id)) continue;
@@ -931,6 +990,17 @@ class GameEngine extends ChangeNotifier {
       grossConsumption: grossCons,
       capacities: caps,
     );
+  }
+  List<BuildingConfig> get _activeSimulationBuildings {
+    if (_activeIndustryPlanetId != state.currentPlanetId ||
+        _activeIndustryCache.isEmpty) {
+      _activeIndustryPlanetId = state.currentPlanetId;
+      _activeIndustryCache = config.buildingList
+          .where((b) => b.planetId == state.currentPlanetId)
+          .take(8)
+          .toList(growable: false);
+    }
+    return _activeIndustryCache;
   }
 
   Map<String, double> _resourceCapacities() {

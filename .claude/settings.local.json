@@ -10,7 +10,9 @@
       "Bash(cmd.exe /c \"flutter pub get\")",
       "Bash(/c/Users/jrhay/flutter/bin/flutter pub get)",
       "Bash(/c/Users/jrhay/flutter/bin/flutter analyze)",
-      "Bash(/c/Users/jrhay/flutter/bin/flutter test)"
+      "Bash(/c/Users/jrhay/flutter/bin/flutter test)",
+      "Bash(xargs grep -l \"IndustryRuntime\\\\|ProductionCycle\")",
+      "Bash(git push)"
     ]
   }
 }

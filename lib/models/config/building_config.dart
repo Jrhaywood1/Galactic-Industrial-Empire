@@ -62,6 +62,7 @@ class BuildingConfig {
   final double productionMultiplierPerLevel;
   final double cycleSeconds;
   final int maxLevel;
+  final String planetId;
   final List<BuildingMilestoneConfig> milestones;
 
   const BuildingConfig({
@@ -79,6 +80,7 @@ class BuildingConfig {
     required this.productionMultiplierPerLevel,
     this.cycleSeconds = 4.0,
     required this.maxLevel,
+    this.planetId = 'planet_1',
     this.milestones = const <BuildingMilestoneConfig>[],
   });
 
@@ -110,6 +112,7 @@ class BuildingConfig {
           (json['productionMultiplierPerLevel'] as num).toDouble(),
       cycleSeconds: (json['cycleSeconds'] as num?)?.toDouble() ?? 4.0,
       maxLevel: json['maxLevel'] as int,
+      planetId: (json['planetId'] ?? json['planet'] ?? 'planet_1').toString(),
       milestones: milestones,
     );
   }

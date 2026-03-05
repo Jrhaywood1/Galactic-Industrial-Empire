@@ -15,6 +15,9 @@ class GameState {
   Map<String, int> missionNextAvailableMs;
   String buyAmountSetting;
 
+  String currentPlanetId;
+  Set<String> unlockedPlanets;
+
   // ContractSystem persistence.
   List<ContractInstance> activeContracts;
   List<ContractInstance> contractOffers;
@@ -37,6 +40,8 @@ class GameState {
     this.pendingOfflineSeconds = 0,
     required this.missionNextAvailableMs,
     this.buyAmountSetting = 'x1',
+    this.currentPlanetId = 'planet_1',
+    Set<String>? unlockedPlanets,
     required this.lastTickTimestamp,
     this.totalPlaytimeSeconds = 0,
     List<ContractInstance>? activeContracts,
@@ -45,7 +50,8 @@ class GameState {
     this.contractRngSeed = 0,
     this.contractRefreshCount = 0,
     this.contractOfferCounter = 0,
-  })  : activeContracts =
+  })  : unlockedPlanets = Set<String>.from(unlockedPlanets ?? const <String>{'planet_1'}),
+        activeContracts =
             List<ContractInstance>.from(activeContracts ?? const <ContractInstance>[]),
         contractOffers =
             List<ContractInstance>.from(contractOffers ?? const <ContractInstance>[]);
@@ -55,6 +61,8 @@ class GameState {
     resources['credits'] = 50.0;
 
     final nowMs = DateTime.now().millisecondsSinceEpoch;
+    final initialPlanetId =
+        config.planetList.isNotEmpty ? config.planetList.first.id : 'planet_1';
 
     return GameState(
       resources: resources,
@@ -72,6 +80,12 @@ class GameState {
       pendingOfflineSeconds: 0,
       missionNextAvailableMs: <String, int>{},
       buyAmountSetting: 'x1',
+      currentPlanetId: initialPlanetId,
+      unlockedPlanets: {
+        initialPlanetId,
+        for (final p in config.planetList)
+          if (p.unlockedByDefault) p.id,
+      },
       lastTickTimestamp: nowMs,
       // ContractSystem defaults.
       activeContracts: <ContractInstance>[],
@@ -94,6 +108,8 @@ class GameState {
         'pendingOfflineSeconds': pendingOfflineSeconds,
         'missionNextAvailableMs': missionNextAvailableMs,
         'buyAmountSetting': buyAmountSetting,
+        'currentPlanetId': currentPlanetId,
+        'unlockedPlanets': unlockedPlanets.toList(),
         'lastTickTimestamp': lastTickTimestamp,
         'totalPlaytimeSeconds': totalPlaytimeSeconds,
         // ContractSystem
@@ -120,6 +136,9 @@ class GameState {
       pendingOfflineSeconds: (json['pendingOfflineSeconds'] as num?)?.toInt() ?? 0,
       missionNextAvailableMs: _intMap(json['missionNextAvailableMs']),
       buyAmountSetting: (json['buyAmountSetting'] as String?) ?? 'x1',
+      currentPlanetId: (json['currentPlanetId'] as String?) ?? 'planet_1',
+      unlockedPlanets:
+          Set<String>.from((json['unlockedPlanets'] as List?) ?? const <String>['planet_1']),
       lastTickTimestamp: (json['lastTickTimestamp'] as num).toInt(),
       totalPlaytimeSeconds: (json['totalPlaytimeSeconds'] as int?) ?? 0,
       activeContracts: activeRaw

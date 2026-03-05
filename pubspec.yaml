@@ -58,6 +58,14 @@ flutter:
 
   assets:
     - assets/config/
+    - assets/data/economy/resources.json
+    - assets/data/economy/planets.json
+    - assets/data/economy/industries_planet_1.json
+    - assets/data/economy/industries_planet_2.json
+    - assets/data/economy/industries_planet_3.json
+    - assets/data/economy/industries_planet_4.json
+    - assets/data/economy/industries_planet_5.json
+    - assets/data/economy/unlocks.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
