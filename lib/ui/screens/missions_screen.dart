@@ -62,7 +62,7 @@ class _GoalsModule extends StatelessWidget {
                     Icon(Icons.flag, size: 16, color: Colors.amberAccent),
                     SizedBox(width: 6),
                     Text(
-                      'Rotating Goals',
+                      'Optional Goals',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],

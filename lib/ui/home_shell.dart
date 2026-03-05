@@ -19,7 +19,7 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final contractBadgeCount = context.select<GameEngine, int>(
-      (engine) => engine.getClaimableContractCount() + engine.getClaimableGoalCount(),
+      (engine) => engine.getClaimableContractCount(),
     );
 
     final screens = <Widget>[

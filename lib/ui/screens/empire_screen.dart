@@ -297,8 +297,7 @@ class _EmpireStatusStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Selector<GameEngine, _StatusStripData>(
       selector: (_, engine) {
-        final net = engine.productionSummary.netRates.values
-            .fold<double>(0.0, (sum, v) => sum + v);
+        final net = engine.getNetProductionValuePerSecond();
         final warningId = engine.storageWarningResourceId;
         final warningName = warningId == null
             ? null
@@ -330,7 +329,7 @@ class _EmpireStatusStrip extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Net ${formatRate(data.netFlowPerSec)}',
+                  'Net Value ${formatRate(data.netFlowPerSec)}',
                   style: const TextStyle(fontSize: 12),
                 ),
                 const Spacer(),

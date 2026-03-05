@@ -127,6 +127,10 @@ class GameEngine extends ChangeNotifier {
   final Map<String, BuildingFlowState> _buildingFlowStates = {};
   final Map<String, double> _buildingEffectiveOutputRates = {};
   final Map<String, bool> _buildingBoostedStates = {};
+  static const int _minimumMissionCooldownSeconds = 180;
+  static const double _missionResourceSpendFactor = 0.25;
+  static const double _missionCreditRewardFactor = 0.08;
+  static const double _missionCreditRewardCap = 250.0;
 
   GameEngine({required this.config, required this.state}) {
     _ensureStateMaps();
@@ -448,15 +452,33 @@ class GameEngine extends ChangeNotifier {
     final mission = config.missions[missionId]!;
 
     for (final req in mission.requirements.entries) {
-      state.resources[req.key] = (state.resources[req.key] ?? 0.0) - req.value;
+      final spend = req.value * _missionResourceSpendFactor;
+      state.resources[req.key] = max(
+        0.0,
+        (state.resources[req.key] ?? 0.0) - spend,
+      );
     }
+
     for (final reward in mission.rewards.entries) {
-      state.resources[reward.key] = (state.resources[reward.key] ?? 0.0) + reward.value;
+      if (reward.key == 'credits') {
+        final reduced = min(
+          _missionCreditRewardCap,
+          reward.value * _missionCreditRewardFactor,
+        );
+        state.resources[reward.key] =
+            (state.resources[reward.key] ?? 0.0) + reduced;
+      } else {
+        state.resources[reward.key] =
+            (state.resources[reward.key] ?? 0.0) + reward.value;
+      }
     }
 
     final nowMs = DateTime.now().millisecondsSinceEpoch;
-    state.missionNextAvailableMs[missionId] =
-        nowMs + (mission.cooldownSeconds * 1000);
+    final cooldown = max(
+      mission.cooldownSeconds,
+      _minimumMissionCooldownSeconds,
+    );
+    state.missionNextAvailableMs[missionId] = nowMs + (cooldown * 1000);
 
     _updateDiscoveredBuildings();
     _recomputeProductionSummary();
@@ -627,6 +649,20 @@ class GameEngine extends ChangeNotifier {
     return count;
   }
 
+  double getNetProductionValuePerSecond() {
+    var value = 0.0;
+
+    for (final entry in productionSummary.netRates.entries) {
+      if (entry.key == 'credits') {
+        value += entry.value;
+        continue;
+      }
+      value += entry.value * _resourceCreditValue(entry.key);
+    }
+
+    return value;
+  }
+
   // -----------------------------
   // Economy simulation
   // -----------------------------
@@ -681,11 +717,27 @@ class GameEngine extends ChangeNotifier {
       }
     }
 
+    var creditIncome = 0.0;
     for (final e in delta.entries) {
       final cap = capacities[e.key] ?? double.infinity;
       final cur = next[e.key] ?? 0.0;
       final v = cur + e.value;
-      next[e.key] = v.clamp(0.0, cap.isFinite ? cap : double.infinity);
+      final nextValue = v.clamp(0.0, cap.isFinite ? cap : double.infinity);
+      next[e.key] = nextValue;
+
+      if (e.key == 'credits') continue;
+
+      final gained = nextValue - cur;
+      if (gained > 0) {
+        creditIncome += gained * _resourceCreditValue(e.key);
+      }
+    }
+
+    if (creditIncome > 0) {
+      final creditCap = capacities['credits'] ?? double.infinity;
+      final creditNow = next['credits'] ?? 0.0;
+      next['credits'] = (creditNow + creditIncome)
+          .clamp(0.0, creditCap.isFinite ? creditCap : double.infinity);
     }
 
     return _SimulationResult(
@@ -877,6 +929,51 @@ class GameEngine extends ChangeNotifier {
     if (level >= 50) mult *= 1.25;
     if (level >= 100) mult *= 1.25;
     return mult;
+  }
+
+  double _resourceCreditValue(String resourceId) {
+    switch (resourceId) {
+      case 'ore':
+        return 0.22;
+      case 'ice':
+        return 0.22;
+      case 'gas':
+        return 0.28;
+      case 'metal':
+        return 1.1;
+      case 'fuel':
+        return 1.4;
+      case 'polymer':
+        return 1.35;
+      case 'alloys':
+        return 2.3;
+      case 'electronics':
+        return 2.6;
+      case 'parts':
+        return 4.2;
+      case 'ships':
+        return 48.0;
+      case 'research_data':
+      case 'gems':
+      case 'logistics':
+      case 'capacity':
+      case 'credits':
+        return 0.0;
+      default:
+        final tier = config.resources[resourceId]?.tier ?? 1;
+        switch (tier) {
+          case 0:
+            return 0.0;
+          case 1:
+            return 0.2;
+          case 2:
+            return 1.2;
+          case 3:
+            return 8.0;
+          default:
+            return 20.0;
+        }
+    }
   }
 
   int _upgradeBuildingInternal(String buildingId, BuyAmountSetting setting) {
