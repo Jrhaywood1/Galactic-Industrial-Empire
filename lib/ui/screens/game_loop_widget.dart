@@ -18,7 +18,6 @@ class _GameLoopWidgetState extends State<GameLoopWidget>
   Duration _lastTickTime = Duration.zero;
   Duration _lastSaveTime = Duration.zero;
 
-  static const _tickInterval = Duration(seconds: 1);
   static const _saveInterval = Duration(seconds: 30);
 
   @override
@@ -34,10 +33,11 @@ class _GameLoopWidgetState extends State<GameLoopWidget>
   }
 
   void _onTick(Duration elapsed) {
-    if (elapsed - _lastTickTime >= _tickInterval) {
-      _lastTickTime = elapsed;
-      context.read<GameEngine>().tick(1.0);
-    }
+    final dt = _lastTickTime == Duration.zero
+        ? 0.0
+        : (elapsed - _lastTickTime).inMilliseconds / 1000.0;
+    _lastTickTime = elapsed;
+    if (dt > 0) context.read<GameEngine>().tick(dt.clamp(0.0, 0.1));
     if (elapsed - _lastSaveTime >= _saveInterval) {
       _lastSaveTime = elapsed;
       SaveService.saveState(context.read<GameEngine>().state);

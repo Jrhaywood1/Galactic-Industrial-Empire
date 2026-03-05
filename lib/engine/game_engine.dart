@@ -123,6 +123,8 @@ class GameEngine extends ChangeNotifier {
   double _globalConsumptionMult = 1.0;
   double _storageMultiplier = 1.0;
 
+  double _playtimeAccumulator = 0.0;
+
   // Runtime building telemetry for UI.
   final Map<String, BuildingFlowState> _buildingFlowStates = {};
   final Map<String, double> _buildingEffectiveOutputRates = {};
@@ -155,7 +157,9 @@ class GameEngine extends ChangeNotifier {
     _updateDiscoveredBuildings();
 
     // Update playtime
-    state.totalPlaytimeSeconds += scaledDt.round();
+    _playtimeAccumulator += scaledDt;
+    state.totalPlaytimeSeconds += _playtimeAccumulator.floor();
+    _playtimeAccumulator -= _playtimeAccumulator.floor();
 
     // Update economy
     _recomputeTechEffects();
