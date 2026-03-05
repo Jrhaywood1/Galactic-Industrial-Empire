@@ -1,0 +1,48 @@
+{
+  "planetUnlocks": [
+    {
+      "planetId": "planet_2",
+      "mode": "all",
+      "conditions": [
+        {
+          "type": "building_level",
+          "buildingId": "cargo_launch_pad",
+          "level": 25
+        }
+      ]
+    },
+    {
+      "planetId": "planet_3",
+      "mode": "all",
+      "conditions": [
+        {
+          "type": "building_level",
+          "buildingId": "orbital_shipyard",
+          "level": 25
+        }
+      ]
+    },
+    {
+      "planetId": "planet_4",
+      "mode": "all",
+      "conditions": [
+        {
+          "type": "building_level",
+          "buildingId": "colony_ship_assembly",
+          "level": 25
+        }
+      ]
+    },
+    {
+      "planetId": "planet_5",
+      "mode": "all",
+      "conditions": [
+        {
+          "type": "building_level",
+          "buildingId": "star_system_colonizer",
+          "level": 25
+        }
+      ]
+    }
+  ]
+}

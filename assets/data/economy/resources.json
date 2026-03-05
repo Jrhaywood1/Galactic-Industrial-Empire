@@ -1,0 +1,424 @@
+{
+  "resources": [
+    {
+      "id": "credits",
+      "name": "Credits",
+      "description": "Universal currency used across all colonies and trade networks.",
+      "icon": "monetization_on",
+      "color": "#FFD700",
+      "tier": 1,
+      "baseCapacity": 100000,
+      "capacityGrowth": 50000
+    },
+    {
+      "id": "research_data",
+      "name": "Research Data",
+      "description": "Scientific knowledge packets used to advance technology.",
+      "icon": "science",
+      "color": "#00BFFF",
+      "tier": 1,
+      "baseCapacity": 5000,
+      "capacityGrowth": 2500
+    },
+    {
+      "id": "ore",
+      "name": "Ore",
+      "description": "Raw mineral ore extracted from planetary deposits.",
+      "icon": "landscape",
+      "color": "#8B7355",
+      "tier": 1,
+      "baseCapacity": 500,
+      "capacityGrowth": 250
+    },
+    {
+      "id": "copper_ore",
+      "name": "Copper Ore",
+      "description": "Conductive mineral essential for basic electronics and alloys.",
+      "icon": "hexagon",
+      "color": "#B87333",
+      "tier": 1,
+      "baseCapacity": 300,
+      "capacityGrowth": 150
+    },
+    {
+      "id": "carbon",
+      "name": "Carbon",
+      "description": "Versatile element used in composites and steel production.",
+      "icon": "diamond",
+      "color": "#4A4A4A",
+      "tier": 1,
+      "baseCapacity": 400,
+      "capacityGrowth": 200
+    },
+    {
+      "id": "metal_ingots",
+      "name": "Metal Ingots",
+      "description": "Smelted metal bars ready for industrial fabrication.",
+      "icon": "view_in_ar",
+      "color": "#C0C0C0",
+      "tier": 1,
+      "baseCapacity": 200,
+      "capacityGrowth": 100
+    },
+    {
+      "id": "steel",
+      "name": "Steel",
+      "description": "High-strength alloy forming the backbone of construction.",
+      "icon": "hardware",
+      "color": "#708090",
+      "tier": 1,
+      "baseCapacity": 150,
+      "capacityGrowth": 75
+    },
+    {
+      "id": "machine_parts",
+      "name": "Machine Parts",
+      "description": "Precision-engineered components for vehicles and equipment.",
+      "icon": "settings",
+      "color": "#A0522D",
+      "tier": 1,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "vehicles",
+      "name": "Vehicles",
+      "description": "Transport and utility vehicles for colony operations.",
+      "icon": "local_shipping",
+      "color": "#4682B4",
+      "tier": 1,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "launch_capacity",
+      "name": "Launch Capacity",
+      "description": "Orbital payload delivery capability for off-world logistics.",
+      "icon": "rocket_launch",
+      "color": "#FF6347",
+      "tier": 1,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "titanium_ore",
+      "name": "Titanium Ore",
+      "description": "Ultra-strong lightweight mineral for advanced construction.",
+      "icon": "terrain",
+      "color": "#E8E8E8",
+      "tier": 2,
+      "baseCapacity": 400,
+      "capacityGrowth": 200
+    },
+    {
+      "id": "rare_earths",
+      "name": "Rare Earths",
+      "description": "Exotic minerals critical for microelectronics and optics.",
+      "icon": "auto_awesome",
+      "color": "#9370DB",
+      "tier": 2,
+      "baseCapacity": 300,
+      "capacityGrowth": 150
+    },
+    {
+      "id": "refined_alloys",
+      "name": "Refined Alloys",
+      "description": "High-purity metal composites for precision engineering.",
+      "icon": "layers",
+      "color": "#B8860B",
+      "tier": 2,
+      "baseCapacity": 200,
+      "capacityGrowth": 100
+    },
+    {
+      "id": "microchips",
+      "name": "Microchips",
+      "description": "Integrated circuits powering computation and automation.",
+      "icon": "memory",
+      "color": "#32CD32",
+      "tier": 2,
+      "baseCapacity": 150,
+      "capacityGrowth": 75
+    },
+    {
+      "id": "ai_cores",
+      "name": "AI Cores",
+      "description": "Neural processing units enabling machine intelligence.",
+      "icon": "psychology",
+      "color": "#00CED1",
+      "tier": 2,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "drones",
+      "name": "Drones",
+      "description": "Autonomous aerial units for recon and delivery.",
+      "icon": "flight",
+      "color": "#FF8C00",
+      "tier": 2,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics",
+      "description": "Heavy-duty autonomous machines for industrial labor.",
+      "icon": "precision_manufacturing",
+      "color": "#DC143C",
+      "tier": 2,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "ships",
+      "name": "Ships",
+      "description": "Orbital-class vessels for transport and defense.",
+      "icon": "sailing",
+      "color": "#1E90FF",
+      "tier": 2,
+      "baseCapacity": 30,
+      "capacityGrowth": 15
+    },
+    {
+      "id": "asteroids",
+      "name": "Asteroids",
+      "description": "Captured space rock rich in metals and volatiles.",
+      "icon": "public",
+      "color": "#A9A9A9",
+      "tier": 3,
+      "baseCapacity": 300,
+      "capacityGrowth": 150
+    },
+    {
+      "id": "helium3",
+      "name": "Helium-3",
+      "description": "Rare isotope harvested for clean fusion reactions.",
+      "icon": "bubble_chart",
+      "color": "#E6E6FA",
+      "tier": 3,
+      "baseCapacity": 250,
+      "capacityGrowth": 125
+    },
+    {
+      "id": "fusion_energy",
+      "name": "Fusion Energy",
+      "description": "High-density power from controlled nuclear fusion.",
+      "icon": "bolt",
+      "color": "#FF4500",
+      "tier": 3,
+      "baseCapacity": 200,
+      "capacityGrowth": 100
+    },
+    {
+      "id": "quantum_chips",
+      "name": "Quantum Chips",
+      "description": "Qubit processors enabling probabilistic computation.",
+      "icon": "developer_board",
+      "color": "#7B68EE",
+      "tier": 3,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "satellites",
+      "name": "Satellites",
+      "description": "Orbital platforms for communications and surveillance.",
+      "icon": "satellite_alt",
+      "color": "#20B2AA",
+      "tier": 3,
+      "baseCapacity": 75,
+      "capacityGrowth": 35
+    },
+    {
+      "id": "platforms",
+      "name": "Platforms",
+      "description": "Armored orbital stations for system defense.",
+      "icon": "shield",
+      "color": "#778899",
+      "tier": 3,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "terraforming_kits",
+      "name": "Terraforming Kits",
+      "description": "Atmospheric and geological modification equipment.",
+      "icon": "park",
+      "color": "#228B22",
+      "tier": 3,
+      "baseCapacity": 30,
+      "capacityGrowth": 15
+    },
+    {
+      "id": "colony_ships",
+      "name": "Colony Ships",
+      "description": "Self-sustaining generation ships for deep-space settlement.",
+      "icon": "rocket",
+      "color": "#4169E1",
+      "tier": 3,
+      "baseCapacity": 20,
+      "capacityGrowth": 10
+    },
+    {
+      "id": "dark_matter",
+      "name": "Dark Matter",
+      "description": "Exotic substance harvested from spatial anomalies.",
+      "icon": "dark_mode",
+      "color": "#483D8B",
+      "tier": 4,
+      "baseCapacity": 200,
+      "capacityGrowth": 100
+    },
+    {
+      "id": "antimatter",
+      "name": "Antimatter",
+      "description": "Annihilation-grade fuel for interstellar propulsion.",
+      "icon": "flare",
+      "color": "#FF1493",
+      "tier": 4,
+      "baseCapacity": 150,
+      "capacityGrowth": 75
+    },
+    {
+      "id": "wormhole_keys",
+      "name": "Wormhole Keys",
+      "description": "Stabilization matrices enabling faster-than-light transit.",
+      "icon": "vpn_key",
+      "color": "#8A2BE2",
+      "tier": 4,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "freight_capacity",
+      "name": "Freight Capacity",
+      "description": "Interstellar cargo throughput for galactic commerce.",
+      "icon": "inventory_2",
+      "color": "#DAA520",
+      "tier": 4,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "dyson_parts",
+      "name": "Dyson Parts",
+      "description": "Megastructure components for stellar energy collection.",
+      "icon": "solar_power",
+      "color": "#FF8C00",
+      "tier": 4,
+      "baseCapacity": 75,
+      "capacityGrowth": 35
+    },
+    {
+      "id": "defense_nodes",
+      "name": "Defense Nodes",
+      "description": "Networked weapon platforms for planetary shielding.",
+      "icon": "security",
+      "color": "#B22222",
+      "tier": 4,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "governance_ai",
+      "name": "Governance AI",
+      "description": "Superintelligent systems managing interstellar civilizations.",
+      "icon": "smart_toy",
+      "color": "#00FA9A",
+      "tier": 4,
+      "baseCapacity": 30,
+      "capacityGrowth": 15
+    },
+    {
+      "id": "colonizers",
+      "name": "Colonizers",
+      "description": "Autonomous fleets that establish new star system colonies.",
+      "icon": "explore",
+      "color": "#6495ED",
+      "tier": 4,
+      "baseCapacity": 20,
+      "capacityGrowth": 10
+    },
+    {
+      "id": "dyson_swarm",
+      "name": "Dyson Swarm",
+      "description": "Orbital collector arrays harnessing entire stellar output.",
+      "icon": "wb_sunny",
+      "color": "#FFA500",
+      "tier": 4,
+      "baseCapacity": 150,
+      "capacityGrowth": 75
+    },
+    {
+      "id": "ringworld_segments",
+      "name": "Ringworld Segments",
+      "description": "Habitable ring sections encircling a star.",
+      "icon": "donut_large",
+      "color": "#00FFFF",
+      "tier": 4,
+      "baseCapacity": 100,
+      "capacityGrowth": 50
+    },
+    {
+      "id": "stellar_engines",
+      "name": "Stellar Engines",
+      "description": "Devices that harness and redirect stellar thrust.",
+      "icon": "engineering",
+      "color": "#FF6347",
+      "tier": 4,
+      "baseCapacity": 75,
+      "capacityGrowth": 35
+    },
+    {
+      "id": "fabricated_planets",
+      "name": "Fabricated Planets",
+      "description": "Artificially constructed worlds built from raw matter.",
+      "icon": "language",
+      "color": "#3CB371",
+      "tier": 4,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "compressed_matter",
+      "name": "Compressed Matter",
+      "description": "Hyper-dense material compacted to neutron-star levels.",
+      "icon": "compress",
+      "color": "#808080",
+      "tier": 4,
+      "baseCapacity": 50,
+      "capacityGrowth": 25
+    },
+    {
+      "id": "singularity_power",
+      "name": "Singularity Power",
+      "description": "Energy extracted from controlled micro black holes.",
+      "icon": "offline_bolt",
+      "color": "#9400D3",
+      "tier": 4,
+      "baseCapacity": 30,
+      "capacityGrowth": 15
+    },
+    {
+      "id": "archives",
+      "name": "Archives",
+      "description": "Eternal knowledge repositories preserving all civilization data.",
+      "icon": "library_books",
+      "color": "#F0E68C",
+      "tier": 4,
+      "baseCapacity": 20,
+      "capacityGrowth": 10
+    },
+    {
+      "id": "gateways",
+      "name": "Gateways",
+      "description": "Trans-galactic portals linking distant star systems instantly.",
+      "icon": "door_front",
+      "color": "#E0B0FF",
+      "tier": 4,
+      "baseCapacity": 10,
+      "capacityGrowth": 5
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "industries": [
+    {
+      "id": "titanium_mine",
+      "name": "Titanium Mine",
+      "description": "Excavates titanium deposits from deep crust formations.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "terrain",
+      "baseCost": {"credits": 2000},
+      "costScaling": 1.10,
+      "produces": {"titanium_ore": 4},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 5,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "rare_earth_extractor",
+      "name": "Rare Earth Extractor",
+      "description": "Isolates rare earth elements from mineral-rich strata.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "auto_awesome",
+      "baseCost": {"credits": 5000},
+      "costScaling": 1.11,
+      "produces": {"rare_earths": 3},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 8,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "advanced_refinery",
+      "name": "Advanced Refinery",
+      "description": "Synthesizes high-purity alloys from planetary feedstock.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "science",
+      "baseCost": {"credits": 10000},
+      "costScaling": 1.11,
+      "produces": {"refined_alloys": 2},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 10,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "microchip_fabricator",
+      "name": "Microchip Fabricator",
+      "description": "Etches nanoscale circuits onto silicon wafers.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "memory",
+      "baseCost": {"credits": 25000},
+      "costScaling": 1.13,
+      "produces": {"microchips": 2, "research_data": 2},
+      "consumes": {"rare_earths": 3, "refined_alloys": 1},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 15,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "ai_processor_plant",
+      "name": "AI Processor Plant",
+      "description": "Produces neural-network processing cores.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "psychology",
+      "baseCost": {"credits": 50000},
+      "costScaling": 1.14,
+      "produces": {"ai_cores": 1},
+      "consumes": {"microchips": 2, "rare_earths": 1},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 20,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "drone_assembly",
+      "name": "Drone Assembly",
+      "description": "Constructs autonomous drones for logistics and recon.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "flight",
+      "baseCost": {"credits": 100000},
+      "costScaling": 1.14,
+      "produces": {"drones": 2},
+      "consumes": {"microchips": 1, "titanium_ore": 3},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 25,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "heavy_robotics_plant",
+      "name": "Heavy Robotics Plant",
+      "description": "Builds industrial-grade autonomous labor machines.",
+      "category": "Manufacturing",
+      "tier": 3,
+      "icon": "precision_manufacturing",
+      "baseCost": {"credits": 175000},
+      "costScaling": 1.15,
+      "produces": {"robotics": 1},
+      "consumes": {"ai_cores": 1, "drones": 1, "refined_alloys": 2},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 35,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "orbital_shipyard",
+      "name": "Orbital Shipyard",
+      "description": "Constructs orbital vessels and earns trade credits.",
+      "category": "Expansion",
+      "tier": 4,
+      "icon": "sailing",
+      "baseCost": {"credits": 250000},
+      "costScaling": 1.16,
+      "produces": {"ships": 1, "credits": 500},
+      "consumes": {"robotics": 1, "titanium_ore": 2, "drones": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 45,
+      "maxLevel": 150,
+      "planetId": "planet_2",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    }
+  ]
+}

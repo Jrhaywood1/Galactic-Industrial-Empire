@@ -1,0 +1,175 @@
+{
+  "industries": [
+    {
+      "id": "ore_mine",
+      "name": "Ore Mine",
+      "description": "Extracts raw mineral ore from deep planetary deposits.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "landscape",
+      "baseCost": {"credits": 10},
+      "costScaling": 1.10,
+      "produces": {"ore": 5},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.06,
+      "cycleSeconds": 2,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 150, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "copper_extractor",
+      "name": "Copper Extractor",
+      "description": "Harvests copper-rich veins from the colony surface.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "hexagon",
+      "baseCost": {"credits": 50},
+      "costScaling": 1.10,
+      "produces": {"copper_ore": 3},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 3,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 150, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "carbon_pit",
+      "name": "Carbon Pit",
+      "description": "Strip-mines carbon-rich geological layers.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "terrain",
+      "baseCost": {"credits": 100},
+      "costScaling": 1.11,
+      "produces": {"carbon": 4},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 4,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 150, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "basic_smelter",
+      "name": "Basic Smelter",
+      "description": "Melts raw ore and copper into usable metal ingots.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "local_fire_department",
+      "baseCost": {"credits": 500},
+      "costScaling": 1.12,
+      "produces": {"metal_ingots": 3, "research_data": 1},
+      "consumes": {"ore": 5, "copper_ore": 2},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 6,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "steel_works",
+      "name": "Steel Works",
+      "description": "Forges high-grade steel from ingots and carbon.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "factory",
+      "baseCost": {"credits": 1000},
+      "costScaling": 1.13,
+      "produces": {"steel": 2},
+      "consumes": {"metal_ingots": 3, "carbon": 3},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 8,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "mechanical_workshop",
+      "name": "Mechanical Workshop",
+      "description": "Crafts precision machine parts from steel and copper.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "build",
+      "baseCost": {"credits": 2000},
+      "costScaling": 1.13,
+      "produces": {"machine_parts": 2},
+      "consumes": {"steel": 2, "copper_ore": 1},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 10,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "vehicle_factory",
+      "name": "Vehicle Factory",
+      "description": "Assembles ground and air vehicles for colony expansion.",
+      "category": "Manufacturing",
+      "tier": 3,
+      "icon": "local_shipping",
+      "baseCost": {"credits": 3500},
+      "costScaling": 1.14,
+      "produces": {"vehicles": 1},
+      "consumes": {"machine_parts": 2, "steel": 1, "metal_ingots": 1},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 15,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "cargo_launch_pad",
+      "name": "Cargo Launch Pad",
+      "description": "Launches freight payloads into orbit, earning credits.",
+      "category": "Expansion",
+      "tier": 4,
+      "icon": "rocket_launch",
+      "baseCost": {"credits": 5000},
+      "costScaling": 1.15,
+      "produces": {"launch_capacity": 1, "credits": 50},
+      "consumes": {"vehicles": 1, "machine_parts": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 20,
+      "maxLevel": 200,
+      "planetId": "planet_1",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 100, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    }
+  ]
+}

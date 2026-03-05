@@ -1,0 +1,172 @@
+{
+  "industries": [
+    {
+      "id": "asteroid_harvester",
+      "name": "Asteroid Harvester",
+      "description": "Captures and processes near-orbit asteroids for raw materials.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "public",
+      "baseCost": {"credits": 100000},
+      "costScaling": 1.11,
+      "produces": {"asteroids": 3},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.05,
+      "cycleSeconds": 10,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "helium3_extractor",
+      "name": "Helium-3 Extractor",
+      "description": "Collects helium-3 isotopes from lunar regolith and gas giants.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "bubble_chart",
+      "baseCost": {"credits": 250000},
+      "costScaling": 1.11,
+      "produces": {"helium3": 3},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 15,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "fusion_reactor_plant",
+      "name": "Fusion Reactor Plant",
+      "description": "Generates enormous energy through controlled nuclear fusion.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "bolt",
+      "baseCost": {"credits": 500000},
+      "costScaling": 1.12,
+      "produces": {"fusion_energy": 2},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 20,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "quantum_processor_foundry",
+      "name": "Quantum Processor Foundry",
+      "description": "Fabricates qubit processors for advanced computation.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "developer_board",
+      "baseCost": {"credits": 1000000},
+      "costScaling": 1.13,
+      "produces": {"quantum_chips": 1, "research_data": 5},
+      "consumes": {"helium3": 2, "asteroids": 2},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 30,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "satellite_array_factory",
+      "name": "Satellite Array Factory",
+      "description": "Mass-produces orbital communication and survey satellites.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "satellite_alt",
+      "baseCost": {"credits": 2500000},
+      "costScaling": 1.14,
+      "produces": {"satellites": 1},
+      "consumes": {"quantum_chips": 1, "asteroids": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 40,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "defense_platform_yard",
+      "name": "Defense Platform Yard",
+      "description": "Constructs armored orbital defense stations.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "shield",
+      "baseCost": {"credits": 5000000},
+      "costScaling": 1.14,
+      "produces": {"platforms": 1},
+      "consumes": {"fusion_energy": 2, "asteroids": 2},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 50,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "terraforming_equipment_plant",
+      "name": "Terraforming Equipment Plant",
+      "description": "Manufactures atmospheric and geological modification systems.",
+      "category": "Manufacturing",
+      "tier": 3,
+      "icon": "park",
+      "baseCost": {"credits": 7500000},
+      "costScaling": 1.15,
+      "produces": {"terraforming_kits": 1},
+      "consumes": {"platforms": 1, "satellites": 1, "fusion_energy": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 70,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "colony_ship_assembly",
+      "name": "Colony Ship Assembly",
+      "description": "Builds generation ships for deep-space colonization.",
+      "category": "Expansion",
+      "tier": 4,
+      "icon": "rocket",
+      "baseCost": {"credits": 10000000},
+      "costScaling": 1.16,
+      "produces": {"colony_ships": 1, "credits": 5000},
+      "consumes": {"terraforming_kits": 1, "quantum_chips": 1, "helium3": 2},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 90,
+      "maxLevel": 100,
+      "planetId": "planet_3",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0},
+        {"count": 75, "outputMultiplier": 5.0, "speedMultiplier": 1.0}
+      ]
+    }
+  ]
+}

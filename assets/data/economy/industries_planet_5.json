@@ -1,0 +1,156 @@
+{
+  "industries": [
+    {
+      "id": "dyson_swarm_construction",
+      "name": "Dyson Swarm Construction",
+      "description": "Deploys vast collector arrays to harness entire stellar output.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "wb_sunny",
+      "baseCost": {"credits": 250000000},
+      "costScaling": 1.13,
+      "produces": {"dyson_swarm": 2},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 30,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "ringworld_fabrication",
+      "name": "Ringworld Fabrication",
+      "description": "Constructs habitable ring segments encircling a star.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "donut_large",
+      "baseCost": {"credits": 750000000},
+      "costScaling": 1.13,
+      "produces": {"ringworld_segments": 2},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 40,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "stellar_engine_assembly",
+      "name": "Stellar Engine Assembly",
+      "description": "Builds engines that harness and redirect stellar thrust.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "engineering",
+      "baseCost": {"credits": 1500000000},
+      "costScaling": 1.14,
+      "produces": {"stellar_engines": 1},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 50,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "planetary_fabricator",
+      "name": "Planetary Fabricator",
+      "description": "Assembles artificial worlds from megastructure components.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "language",
+      "baseCost": {"credits": 5000000000},
+      "costScaling": 1.15,
+      "produces": {"fabricated_planets": 1},
+      "consumes": {"ringworld_segments": 2, "dyson_swarm": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 70,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "matter_compression_plant",
+      "name": "Matter Compression Plant",
+      "description": "Compresses matter to neutron-star density for exotic applications.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "compress",
+      "baseCost": {"credits": 10000000000},
+      "costScaling": 1.15,
+      "produces": {"compressed_matter": 1, "research_data": 25},
+      "consumes": {"stellar_engines": 1, "dyson_swarm": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 90,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "singularity_reactor",
+      "name": "Singularity Reactor",
+      "description": "Extracts energy from controlled micro black holes.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "offline_bolt",
+      "baseCost": {"credits": 20000000000},
+      "costScaling": 1.16,
+      "produces": {"singularity_power": 1},
+      "consumes": {"compressed_matter": 1, "stellar_engines": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 110,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "cosmic_archive",
+      "name": "Cosmic Archive",
+      "description": "Preserves all civilization knowledge in eternal data vaults.",
+      "category": "Manufacturing",
+      "tier": 3,
+      "icon": "library_books",
+      "baseCost": {"credits": 35000000000},
+      "costScaling": 1.17,
+      "produces": {"archives": 1},
+      "consumes": {"singularity_power": 1, "fabricated_planets": 1, "ringworld_segments": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 140,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "galactic_gateway_builder",
+      "name": "Galactic Gateway Builder",
+      "description": "Opens trans-galactic portals linking distant star systems.",
+      "category": "Expansion",
+      "tier": 4,
+      "icon": "door_front",
+      "baseCost": {"credits": 50000000000},
+      "costScaling": 1.18,
+      "produces": {"gateways": 1, "credits": 500000},
+      "consumes": {"archives": 1, "compressed_matter": 1, "singularity_power": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 180,
+      "maxLevel": 50,
+      "planetId": "planet_5",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    }
+  ]
+}

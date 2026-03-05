@@ -1,0 +1,34 @@
+{
+  "planets": [
+    {
+      "id": "planet_1",
+      "name": "Frontier Colony",
+      "order": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "planet_2",
+      "name": "Industrial Megacity",
+      "order": 2,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "planet_3",
+      "name": "Orbital Infrastructure",
+      "order": 3,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "planet_4",
+      "name": "Interstellar Economy",
+      "order": 4,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "planet_5",
+      "name": "Megastructure Era",
+      "order": 5,
+      "unlockedByDefault": false
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "industries": [
+    {
+      "id": "dark_matter_extractor",
+      "name": "Dark Matter Extractor",
+      "description": "Siphons dark matter from spatial anomalies and void pockets.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "dark_mode",
+      "baseCost": {"credits": 5000000},
+      "costScaling": 1.12,
+      "produces": {"dark_matter": 3},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 20,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "antimatter_refinery",
+      "name": "Antimatter Refinery",
+      "description": "Produces and contains antimatter for interstellar propulsion.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "flare",
+      "baseCost": {"credits": 15000000},
+      "costScaling": 1.12,
+      "produces": {"antimatter": 2},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 30,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "wormhole_stabilizer",
+      "name": "Wormhole Stabilizer",
+      "description": "Generates spacetime stabilization fields for FTL transit.",
+      "category": "Extraction",
+      "tier": 1,
+      "icon": "vpn_key",
+      "baseCost": {"credits": 30000000},
+      "costScaling": 1.13,
+      "produces": {"wormhole_keys": 1},
+      "consumes": {},
+      "productionMultiplierPerLevel": 0.04,
+      "cycleSeconds": 35,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "interstellar_freight_hub",
+      "name": "Interstellar Freight Hub",
+      "description": "Routes cargo through wormhole networks across star systems.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "inventory_2",
+      "baseCost": {"credits": 75000000},
+      "costScaling": 1.14,
+      "produces": {"freight_capacity": 2, "research_data": 10},
+      "consumes": {"wormhole_keys": 1, "antimatter": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 45,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "dyson_component_factory",
+      "name": "Dyson Component Factory",
+      "description": "Manufactures structural elements for stellar megastructures.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "solar_power",
+      "baseCost": {"credits": 150000000},
+      "costScaling": 1.15,
+      "produces": {"dyson_parts": 1},
+      "consumes": {"dark_matter": 2, "antimatter": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 60,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "planetary_defense_grid",
+      "name": "Planetary Defense Grid",
+      "description": "Deploys networked weapon platforms for system-wide shielding.",
+      "category": "Refining",
+      "tier": 2,
+      "icon": "security",
+      "baseCost": {"credits": 250000000},
+      "costScaling": 1.15,
+      "produces": {"defense_nodes": 1},
+      "consumes": {"freight_capacity": 1, "dark_matter": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 75,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "ai_governance_core",
+      "name": "AI Governance Core",
+      "description": "Creates superintelligent systems to manage interstellar empires.",
+      "category": "Manufacturing",
+      "tier": 3,
+      "icon": "smart_toy",
+      "baseCost": {"credits": 400000000},
+      "costScaling": 1.16,
+      "produces": {"governance_ai": 1},
+      "consumes": {"defense_nodes": 1, "dyson_parts": 1, "wormhole_keys": 1},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 100,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    },
+    {
+      "id": "star_system_colonizer",
+      "name": "Star System Colonizer",
+      "description": "Launches autonomous fleets to settle new star systems.",
+      "category": "Expansion",
+      "tier": 4,
+      "icon": "explore",
+      "baseCost": {"credits": 500000000},
+      "costScaling": 1.17,
+      "produces": {"colonizers": 1, "credits": 50000},
+      "consumes": {"governance_ai": 1, "freight_capacity": 1, "antimatter": 2},
+      "productionMultiplierPerLevel": 0.03,
+      "cycleSeconds": 120,
+      "maxLevel": 75,
+      "planetId": "planet_4",
+      "milestones": [
+        {"count": 25, "outputMultiplier": 2.0, "speedMultiplier": 1.0},
+        {"count": 50, "outputMultiplier": 3.0, "speedMultiplier": 1.0}
+      ]
+    }
+  ]
+}
