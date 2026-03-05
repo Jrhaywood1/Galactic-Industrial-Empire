@@ -27,6 +27,26 @@ class UnlockCondition {
   }
 }
 
+class BuildingMilestoneConfig {
+  final int count;
+  final double outputMultiplier;
+  final double speedMultiplier;
+
+  const BuildingMilestoneConfig({
+    required this.count,
+    this.outputMultiplier = 1.0,
+    this.speedMultiplier = 1.0,
+  });
+
+  factory BuildingMilestoneConfig.fromJson(Map<String, dynamic> json) {
+    return BuildingMilestoneConfig(
+      count: (json['count'] as num).toInt(),
+      outputMultiplier: (json['outputMultiplier'] as num?)?.toDouble() ?? 1.0,
+      speedMultiplier: (json['speedMultiplier'] as num?)?.toDouble() ?? 1.0,
+    );
+  }
+}
+
 class BuildingConfig {
   final String id;
   final String name;
@@ -42,6 +62,7 @@ class BuildingConfig {
   final double productionMultiplierPerLevel;
   final double cycleSeconds;
   final int maxLevel;
+  final List<BuildingMilestoneConfig> milestones;
 
   const BuildingConfig({
     required this.id,
@@ -58,9 +79,16 @@ class BuildingConfig {
     required this.productionMultiplierPerLevel,
     this.cycleSeconds = 4.0,
     required this.maxLevel,
+    this.milestones = const <BuildingMilestoneConfig>[],
   });
 
   factory BuildingConfig.fromJson(Map<String, dynamic> json) {
+    final milestones = ((json['milestones'] as List?) ?? const <dynamic>[])
+        .whereType<Map>()
+        .map((m) => BuildingMilestoneConfig.fromJson(Map<String, dynamic>.from(m)))
+        .toList(growable: false)
+      ..sort((a, b) => a.count.compareTo(b.count));
+
     return BuildingConfig(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -82,6 +110,7 @@ class BuildingConfig {
           (json['productionMultiplierPerLevel'] as num).toDouble(),
       cycleSeconds: (json['cycleSeconds'] as num?)?.toDouble() ?? 4.0,
       maxLevel: json['maxLevel'] as int,
+      milestones: milestones,
     );
   }
 }

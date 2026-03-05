@@ -127,6 +127,11 @@ class GameEngine extends ChangeNotifier {
   final Map<String, BuildingFlowState> _buildingFlowStates = {};
   final Map<String, double> _buildingEffectiveOutputRates = {};
   final Map<String, bool> _buildingBoostedStates = {};
+
+  // Cached milestone resolution, invalidated only when owned count changes.
+  final Map<String, int> _milestoneResolvedOwnedCount = {};
+  final Map<String, double> _milestoneOutputMultiplierCache = {};
+  final Map<String, double> _milestoneSpeedMultiplierCache = {};
   static const int _minimumMissionCooldownSeconds = 180;
   static const double _missionResourceSpendFactor = 0.25;
   static const double _missionCreditRewardFactor = 0.08;
@@ -760,16 +765,18 @@ class GameEngine extends ChangeNotifier {
     final baseMult =
         pow(b.productionMultiplierPerLevel, max(0, level - 1)).toDouble();
     final techMult = _buildingProductionMult[b.id] ?? 1.0;
-    final milestoneMult = _milestoneMultiplier(level);
-    final effectiveProdMult = techMult * milestoneMult;
+    _resolveMilestoneMultipliersIfNeeded(b.id, level, b.milestones);
+    final milestoneOutputMult = _milestoneOutputMultiplierCache[b.id] ?? 1.0;
+    final milestoneSpeedMult = _milestoneSpeedMultiplierCache[b.id] ?? 1.0;
+    final effectiveProdMult = techMult * milestoneOutputMult;
 
     final producesPerSec = {
       for (final e in b.produces.entries)
-        e.key: e.value * level * baseMult * effectiveProdMult * _globalProductionMult,
+        e.key: e.value * level * baseMult * effectiveProdMult * _globalProductionMult * milestoneSpeedMult,
     };
     final consumesPerSec = {
       for (final e in b.consumes.entries)
-        e.key: e.value * level * baseMult * _globalConsumptionMult,
+        e.key: e.value * level * baseMult * _globalConsumptionMult * milestoneSpeedMult,
     };
 
     var inputFactor = 1.0;
@@ -819,7 +826,9 @@ class GameEngine extends ChangeNotifier {
       producesPerSecond: producesPerSec,
       consumesPerSecond: consumesPerSec,
       totalOutputPerSecond: totalOutputPerSecond,
-      boosted: effectiveProdMult > 1.0001 || _globalProductionMult > 1.0001,
+      boosted: effectiveProdMult > 1.0001 ||
+          _globalProductionMult > 1.0001 ||
+          milestoneSpeedMult > 1.0001,
     );
   }
 
@@ -894,15 +903,19 @@ class GameEngine extends ChangeNotifier {
 
       final baseMult =
           pow(b.productionMultiplierPerLevel, max(0, level - 1)).toDouble();
-      final prodMult = (_buildingProductionMult[b.id] ?? 1.0) * _milestoneMultiplier(level);
+      _resolveMilestoneMultipliersIfNeeded(b.id, level, b.milestones);
+      final milestoneOutputMult = _milestoneOutputMultiplierCache[b.id] ?? 1.0;
+      final milestoneSpeedMult = _milestoneSpeedMultiplierCache[b.id] ?? 1.0;
+      final prodMult = (_buildingProductionMult[b.id] ?? 1.0) * milestoneOutputMult;
 
       for (final e in b.produces.entries) {
-        final v = e.value * level * baseMult * prodMult * _globalProductionMult;
+        final v =
+            e.value * level * baseMult * prodMult * _globalProductionMult * milestoneSpeedMult;
         net[e.key] = (net[e.key] ?? 0.0) + v;
         grossProd[e.key] = (grossProd[e.key] ?? 0.0) + v;
       }
       for (final e in b.consumes.entries) {
-        final v = e.value * level * baseMult * _globalConsumptionMult;
+        final v = e.value * level * baseMult * _globalConsumptionMult * milestoneSpeedMult;
         net[e.key] = (net[e.key] ?? 0.0) - v;
         grossCons[e.key] = (grossCons[e.key] ?? 0.0) + v;
       }
@@ -922,13 +935,26 @@ class GameEngine extends ChangeNotifier {
     };
   }
 
-  double _milestoneMultiplier(int level) {
-    var mult = 1.0;
-    if (level >= 10) mult *= 1.25;
-    if (level >= 25) mult *= 1.25;
-    if (level >= 50) mult *= 1.25;
-    if (level >= 100) mult *= 1.25;
-    return mult;
+  void _resolveMilestoneMultipliersIfNeeded(
+    String buildingId,
+    int ownedCount,
+    List<BuildingMilestoneConfig> milestones,
+  ) {
+    final lastResolved = _milestoneResolvedOwnedCount[buildingId];
+    if (lastResolved == ownedCount) return;
+
+    var outputMultiplier = 1.0;
+    var speedMultiplier = 1.0;
+
+    for (final milestone in milestones) {
+      if (ownedCount < milestone.count) break;
+      outputMultiplier = milestone.outputMultiplier;
+      speedMultiplier = milestone.speedMultiplier;
+    }
+
+    _milestoneResolvedOwnedCount[buildingId] = ownedCount;
+    _milestoneOutputMultiplierCache[buildingId] = outputMultiplier;
+    _milestoneSpeedMultiplierCache[buildingId] = speedMultiplier;
   }
 
   double _resourceCreditValue(String resourceId) {
