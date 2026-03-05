@@ -195,25 +195,30 @@ class _TechCard extends StatelessWidget {
           case 'production_multiplier':
             final name = engine.config.buildings[e.target]?.name ?? e.target ?? '';
             label = '$name x${e.value}';
+            break;
           case 'cost_reduction':
             final name = engine.config.buildings[e.target]?.name ?? e.target ?? '';
             final pct = ((1.0 - (e.value ?? 1.0)) * 100).round();
             label = '$name -$pct% cost';
             color = Colors.greenAccent;
+            break;
           case 'global_production_multiplier':
             label = 'All production x${e.value}';
             color = Colors.amberAccent;
+            break;
           case 'global_consumption_reduction':
             final pct = ((1.0 - (e.value ?? 1.0)) * 100).round();
             label = 'All consumption -$pct%';
             color = Colors.greenAccent;
+            break;
           case 'unlock_resource':
-            final name =
-                engine.config.resources[e.target]?.name ?? e.target ?? '';
+            final name = engine.config.resources[e.target]?.name ?? e.target ?? '';
             label = 'Unlock $name';
             color = Colors.purpleAccent;
+            break;
           default:
             label = e.type;
+            break;
         }
         return Text(label, style: TextStyle(fontSize: 10, color: color));
       }).toList(),

@@ -40,6 +40,7 @@ class BuildingConfig {
   final Map<String, double> produces;
   final Map<String, double> consumes;
   final double productionMultiplierPerLevel;
+  final double cycleSeconds;
   final int maxLevel;
 
   const BuildingConfig({
@@ -55,6 +56,7 @@ class BuildingConfig {
     required this.produces,
     required this.consumes,
     required this.productionMultiplierPerLevel,
+    this.cycleSeconds = 4.0,
     required this.maxLevel,
   });
 
@@ -78,6 +80,7 @@ class BuildingConfig {
           .map((k, v) => MapEntry(k, (v as num).toDouble())),
       productionMultiplierPerLevel:
           (json['productionMultiplierPerLevel'] as num).toDouble(),
+      cycleSeconds: (json['cycleSeconds'] as num?)?.toDouble() ?? 4.0,
       maxLevel: json['maxLevel'] as int,
     );
   }
